@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">VocabularySet</string>
+    <string name="title_activity_vocab_dashboard">VocabDashboard</string>
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:layout_width="73dp"
+        android:layout_height="77dp"
+        tools:layout_editor_absoluteY="16dp"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="134dp"
+        android:layout_height="48dp"
+        tools:layout_editor_absoluteY="110dp"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <EditText
+        android:layout_width="141dp"
+        android:layout_height="72dp"
+        tools:layout_editor_absoluteY="18dp"
+        tools:layout_editor_absoluteX="165dp" />
+    <EditText
+        android:layout_width="205dp"
+        android:layout_height="77dp"
+        tools:layout_editor_absoluteY="107dp"
+        tools:layout_editor_absoluteX="165dp" />
+    <EditText
+        android:layout_width="357dp"
+        android:layout_height="81dp"
+        tools:layout_editor_absoluteY="197dp"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:fabSize="mini"
+        app:srcCompat="@android:drawable/ic_delete"
+        tools:layout_editor_absoluteX="326dp"
+        tools:layout_editor_absoluteY="26dp" />
+
+</android.support.constraint.ConstraintLayout>
