@@ -47,8 +47,6 @@ public class VocabDashboard extends AppCompatActivity {
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Log.d("access token", pref.getString("access_token", ""));
-
-
         ResourceRequest resourceRequest = new ResourceRequest("1", "vocabularyset", "");
         RestClient.getExampleApi().postGetResources("Bearer " + pref.getString("access_token", ""), resourceRequest).enqueue(getVocabResources);
 
