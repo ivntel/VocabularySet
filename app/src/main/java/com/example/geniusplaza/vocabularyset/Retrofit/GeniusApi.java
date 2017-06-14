@@ -5,8 +5,12 @@ package com.example.geniusplaza.vocabularyset.Retrofit;
  */
 
 import com.example.geniusplaza.vocabularyset.POJO.AuthToken;
+import com.example.geniusplaza.vocabularyset.POJO.ResourceNew;
+import com.example.geniusplaza.vocabularyset.POJO.ResourceRequest;
+import com.example.geniusplaza.vocabularyset.POJO.Resources;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Header;
@@ -26,5 +30,8 @@ public interface GeniusApi {
     @FormUrlEncoded
     @POST("o/token/")
     Call<AuthToken> postRefreshToken(@Header("Authorization") String authorization, @Query("refresh_token") String refreshToken, @Field("grant_type") String grantType);
+
+    @POST("api/get_resources/")
+    Call<Resources> postGetResources(@Header("Authorization") String authorization, @Body ResourceRequest resourceRequest);
 
 }

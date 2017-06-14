@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.geniusplaza.vocabularyset">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,7 +21,7 @@
             android:name=".VocabDashboard"
             android:label="@string/title_activity_vocab_dashboard"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AddVocabSet" />
+
         <activity android:name=".EditVocabSet" />
         <activity android:name=".ShowActivity"></activity>
     </application>

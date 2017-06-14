@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:hint="Enter the user name"
+        android:text="shahstudent"
          />
     <EditText
         android:id="@+id/password"
@@ -21,11 +22,13 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:hint="Enter the password"
+        android:text="123"
         />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/loginbutton"
         android:text="LOGIN"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:onClick="loginButtonClicked"/>
 </LinearLayout>
