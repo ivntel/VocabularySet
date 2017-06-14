@@ -9,6 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.geniusplaza.vocabularyset.POJO.Resource;
 import com.example.geniusplaza.vocabularyset.POJO.ResourceNew;
@@ -16,6 +19,7 @@ import com.example.geniusplaza.vocabularyset.POJO.ResourceRequest;
 import com.example.geniusplaza.vocabularyset.POJO.Resources;
 import com.example.geniusplaza.vocabularyset.Retrofit.GeniusApi;
 import com.example.geniusplaza.vocabularyset.Retrofit.RestClient;
+import com.example.geniusplaza.vocabularyset.Utils.VocabDashGridviewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +30,23 @@ import retrofit2.Response;
 
 public class VocabDashboard extends AppCompatActivity {
 
+    List<ResourceNew> temp = new ArrayList<ResourceNew>();
+    GridView vocabDashboardGridview;
+    TextView userTextView, descriptionTextView, titleTextView;
+    ImageView vocabSetImageView, userIconImageView;
+    VocabDashGridviewAdapter vocabDashGridviewAdapter;
     Resources resources;
-    List<ResourceNew> temp = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        resources = new Resources();
         setContentView(R.layout.activity_vocab_dashboard);
+        vocabDashboardGridview = (GridView) findViewById(R.id.grid_view);
+        //vocabDashGridviewAdapter = new VocabDashGridviewAdapter(getApplicationContext(), resources);
+        vocabDashGridviewAdapter = new VocabDashGridviewAdapter(temp,this);
+        vocabDashboardGridview.setAdapter(vocabDashGridviewAdapter);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         resources = new Resources();
@@ -60,6 +75,8 @@ public class VocabDashboard extends AppCompatActivity {
             if(response.isSuccessful()){
                 Log.d("Successful response", "in VocabDashboard");
                 temp = response.body().getResources();
+                resources = response.body();
+                vocabDashGridviewAdapter.updateData(response.body());
                 Log.d("TRYY", temp.get(0).getDescription());
             }
             else{
