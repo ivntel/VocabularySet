@@ -10,6 +10,7 @@ import com.example.geniusplaza.vocabularyset.POJO.ResourceNew;
 import com.example.geniusplaza.vocabularyset.POJO.ResourceRequest;
 import com.example.geniusplaza.vocabularyset.POJO.Resources;
 
+import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -26,18 +27,16 @@ public interface GeniusApi {
 
     @FormUrlEncoded
     @POST("o/token/")
-    Call<AuthToken> postCredentials(@Header("Authorization") String authorization, @Query("username") String username, @Query("password") String password, @Field("grant_type") String grantType);
+    Observable<AuthToken> postCredentials(@Header("Authorization") String authorization, @Query("username") String username, @Query("password") String password, @Field("grant_type") String grantType);
 
     @FormUrlEncoded
     @POST("o/token/")
     Call<AuthToken> postRefreshToken(@Header("Authorization") String authorization, @Query("refresh_token") String refreshToken, @Field("grant_type") String grantType);
 
     @POST("api/get_resources/")
-    Call<Resources> postGetResources(@Header("Authorization") String authorization, @Body ResourceRequest resourceRequest);
+    Observable<Resources> postGetResources(@Header("Authorization") String authorization, @Body ResourceRequest resourceRequest);
 
     @FormUrlEncoded
     @POST("api/create_resource/")
-    Call<CreateResource> createVocabSet(@Header("Authorization") String authorization, @Query("title") String title, @Query("description") String description, @Query("language_id") String lid, @Field("type_id") String type);
-
-
+    Observable<CreateResource> createVocabSet(@Header("Authorization") String authorization, @Query("title") String title, @Query("description") String description, @Query("language_id") String lid, @Field("type_id") String type);
 }

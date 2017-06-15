@@ -27,6 +27,9 @@ import com.example.geniusplaza.vocabularyset.Utils.VocabDashGridviewAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,7 +53,6 @@ public class VocabDashboard extends AppCompatActivity {
         sEditText = (EditText)findViewById(R.id.searchEditText);
         vocabDashboardGridview = (GridView) findViewById(R.id.grid_view);
 
-        //vocabDashGridviewAdapter = new VocabDashGridviewAdapter(getApplicationContext(), resources);
         vocabDashGridviewAdapter = new VocabDashGridviewAdapter(temp,this);
         vocabDashboardGridview.setAdapter(vocabDashGridviewAdapter);
 
@@ -58,16 +60,63 @@ public class VocabDashboard extends AppCompatActivity {
         setSupportActionBar(toolbar);
         resources = new Resources();
 
-
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Log.d("access token", pref.getString("access_token", ""));
         ResourceRequest resourceRequest = new ResourceRequest("1", "vocabularyset", "");
-        RestClient.getExampleApi().postGetResources("Bearer " + pref.getString("access_token", ""), resourceRequest).enqueue(getVocabResources);
+        RestClient.getExampleApi().postGetResources("Bearer " + pref.getString("access_token", ""), resourceRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<Resources>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Resources value) {
+                Log.d("Successful response", "in VocabDashboard");
+                temp = value.getResources();
+                resources = value;
+                vocabDashGridviewAdapter.updateData(value);
+                Log.d("TRYY", temp.get(0).getDescription());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.d("Not successful response", "in VocabDashboard");
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
     public void searchButtonClicked(View v){
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         ResourceRequest resourceRequest = new ResourceRequest("1", "vocabularyset", sEditText.getText().toString());
-        RestClient.getExampleApi().postGetResources("Bearer " + pref.getString("access_token", ""), resourceRequest).enqueue(getVocabResources);
+        RestClient.getExampleApi().postGetResources("Bearer " + pref.getString("access_token", ""), resourceRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<Resources>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Resources value) {
+                Log.d("Successful response", "in VocabDashboard");
+                temp = value.getResources();
+                resources = value;
+                vocabDashGridviewAdapter.updateData(value);
+                Log.d("TRYY", temp.get(0).getDescription());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.d("Not successful response", "in VocabDashboard");
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
 
     }
     public void addVocabSetClicked(View v){
@@ -81,28 +130,4 @@ public class VocabDashboard extends AppCompatActivity {
         i.putExtra("check", 1);
         startActivity(i);
     }
-    Callback<Resources> getVocabResources = new Callback<Resources>() {
-        @Override
-        public void onResponse(Call<Resources> call, Response<Resources> response) {
-            //Log.d("response",Integer.toString(response.code()));
-
-            if(response.isSuccessful()){
-                Log.d("Successful response", "in VocabDashboard");
-                temp = response.body().getResources();
-                resources = response.body();
-                vocabDashGridviewAdapter.updateData(response.body());
-                Log.d("TRYY", temp.get(0).getDescription());
-            }
-            else{
-                Log.d("Not successful response", "in VocabDashboard");
-            }
-        }
-
-        @Override
-        public void onFailure(Call<Resources> call, Throwable t) {
-            Log.d("response",t.toString());
-        }
-    };
-
-
 }

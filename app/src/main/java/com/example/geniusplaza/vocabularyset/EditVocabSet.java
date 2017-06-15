@@ -20,6 +20,9 @@ import com.example.geniusplaza.vocabularyset.Retrofit.RestClient;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -68,27 +71,38 @@ public class EditVocabSet extends AppCompatActivity {
     public void saveButtonClicked(View v){
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-        RestClient.getExampleApi().createVocabSet("Bearer " + pref.getString("access_token", ""),title.getText().toString(), description.getText().toString(), "1","4"  ).enqueue(createVocabSet);
-        Toast.makeText(getApplicationContext(), "Save successful", Toast.LENGTH_SHORT).show();
-        Intent i = new Intent(this, VocabDashboard.class);
-        startActivity(i);
+        if(title.getText().toString() == null || description.getText().toString() == null ){
+            Toast.makeText(getApplicationContext(), "Please input the needed information", Toast.LENGTH_SHORT).show();
+        }
+        else {
+
+            RestClient.getExampleApi().createVocabSet("Bearer " + pref.getString("access_token", ""), title.getText().toString(), description.getText().toString(), "1", "4").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<CreateResource>() {
+                @Override
+                public void onSubscribe(Disposable d) {
+
+                }
+
+                @Override
+                public void onNext(CreateResource value) {
+                    Log.d("Successful response", "in add vocab set");
+                    Toast.makeText(getApplicationContext(), "Save successful", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+
+                }
+
+                @Override
+                public void onComplete() {
+
+                }
+            });
+            Intent i = new Intent(this, VocabDashboard.class);
+            startActivity(i);
+        }
     }
-    Callback<CreateResource> createVocabSet = new Callback<CreateResource>() {
-        @Override
-        public void onResponse(Call<CreateResource> call, Response<CreateResource> response) {
-            if(response.isSuccessful()){
-                Log.d("Successful response", "in add vocab set");
-            }
-            else {
 
-            }
-        }
-
-        @Override
-        public void onFailure(Call<CreateResource> call, Throwable t) {
-
-        }
-    };
     public void cancelButtonClicked(View v){
         Toast.makeText(getApplicationContext(), "Canceled", Toast.LENGTH_SHORT).show();
         Intent i = new Intent(this, VocabDashboard.class);

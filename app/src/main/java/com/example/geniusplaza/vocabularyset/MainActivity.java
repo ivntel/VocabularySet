@@ -16,6 +16,9 @@ import com.example.geniusplaza.vocabularyset.POJO.AuthToken;
 import com.example.geniusplaza.vocabularyset.Retrofit.GeniusApi;
 import com.example.geniusplaza.vocabularyset.Retrofit.RestClient;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,33 +53,37 @@ public class MainActivity extends AppCompatActivity {
         else{
             Log.d("Main Activity","API call");
             secretKey = apiConstants.getBase64();
-            RestClient.getExampleApi().postCredentials("Basic "+secretKey, userName, password, "password").enqueue(tokenCallback);
+            RestClient.getExampleApi().postCredentials("Basic "+secretKey, userName, password, "password").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<AuthToken>() {
+                @Override
+                public void onSubscribe(Disposable d) {
+
+                }
+
+                @Override
+                public void onNext(AuthToken value) {
+                    Log.d("in main activity","SUCCCESSSS");
+                    accessToken = value.getAccessToken();
+                    SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("access_token",accessToken);
+                    editor.apply();
+                    String temp = pref.getString("access_token","");
+                    Log.d("aaaaaaaaaaa",temp);
+                    Intent i = new Intent(getApplicationContext(), VocabDashboard.class);
+                    startActivity(i);
+
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    Toast.makeText(MainActivity.this, "1st token request fail", Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onComplete() {
+
+                }
+            });
         }
     }
-    Callback<AuthToken> tokenCallback = new Callback<AuthToken>() {
-        @Override
-        public void onResponse(Call<AuthToken> call, Response<AuthToken> response) {
-            if(response.isSuccessful()){
-                Log.d("in main activity","SUCCCESSSS");
-                accessToken = response.body().getAccessToken();
-                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                SharedPreferences.Editor editor = pref.edit();
-                editor.putString("access_token",accessToken);
-                editor.apply();
-                String temp = pref.getString("access_token","");
-                Log.d("aaaaaaaaaaa",temp);
-                Intent i = new Intent(getApplicationContext(), VocabDashboard.class);
-                startActivity(i);
-            }
-            else{
-                Toast.makeText(MainActivity.this, "1st token request fail", Toast.LENGTH_LONG).show();
-            }
-
-        }
-
-        @Override
-        public void onFailure(Call<AuthToken> call, Throwable t) {
-
-        }
-    };
 }
