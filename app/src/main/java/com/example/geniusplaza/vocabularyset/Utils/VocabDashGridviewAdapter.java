@@ -1,11 +1,16 @@
 package com.example.geniusplaza.vocabularyset.Utils;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -16,6 +21,9 @@ import com.example.geniusplaza.vocabularyset.POJO.ResourceNew;
 import com.example.geniusplaza.vocabularyset.POJO.Resources;
 import com.example.geniusplaza.vocabularyset.R;
 import com.bumptech.glide.Glide;
+import com.example.geniusplaza.vocabularyset.Retrofit.GeniusApi;
+import com.example.geniusplaza.vocabularyset.ShowActivity;
+import com.example.geniusplaza.vocabularyset.VocabDashboard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +34,9 @@ import java.util.List;
 
 public class VocabDashGridviewAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
-    private List<ResourceNew> mResources;
+    public List<ResourceNew> mResources;
     private Context mContext;
+    public VocabDashboard vocabDashboard = new VocabDashboard();
 
     public VocabDashGridviewAdapter(List<ResourceNew> mResources, Context mContext) {
         this.mResources = mResources;
@@ -55,7 +64,7 @@ public class VocabDashGridviewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View view;
         ViewHolder holder;
 
@@ -71,6 +80,7 @@ public class VocabDashGridviewAdapter extends BaseAdapter {
             holder.vocabSetImageView = (ImageView) view.findViewById(R.id.vocabSetImage);
             holder.userIconImageView = (ImageView) view.findViewById(R.id.vocabDashUserIcon);
             holder.vocabLayout = (ConstraintLayout)view.findViewById(R.id.vocabDashLayout);
+            holder.takeTest = (Button)view.findViewById(R.id.vocabDashTakeTestButton);
 
             view.setTag(holder);
         }
@@ -84,17 +94,17 @@ public class VocabDashGridviewAdapter extends BaseAdapter {
         holder.titleTextView.setText(resourceNew.getTitle());
         Glide.with(mContext).load(resourceNew.getResourceImage()).into(holder.vocabSetImageView);
         Glide.with(mContext).load(resourceNew.getIcon()).into(holder.userIconImageView);
-
-        /*holder.rowLayout.setOnClickListener(new View.OnClickListener() {
+        holder.takeTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, DetailActivity.class);
-                intent.putExtra(DetailActivity.ARG_MOVIE, movie);
-                mContext.startActivity(intent);
+                Log.d("ffffffff", (String.valueOf(position)));
+                Log.d("Button clicked",mResources.get(position).getId().toString());
+                ShowActivity.resId = mResources.get(position).getId().toString();
+
+                Intent i = new Intent(((VocabDashboard) mContext).getApplicationContext(), ShowActivity.class);
+                mContext.startActivity(i);
             }
-        });*/
-
-
+        });
         return view;
     }
 
@@ -103,6 +113,7 @@ public class VocabDashGridviewAdapter extends BaseAdapter {
         ConstraintLayout vocabLayout;
         TextView userTextView, descriptionTextView, titleTextView;
         ImageView vocabSetImageView, userIconImageView;
+        Button takeTest;
 
     }
 }

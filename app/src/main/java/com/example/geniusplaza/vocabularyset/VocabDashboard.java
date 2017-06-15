@@ -36,11 +36,11 @@ import retrofit2.Response;
 
 public class VocabDashboard extends AppCompatActivity {
 
-    List<ResourceNew> temp = new ArrayList<ResourceNew>();
+    public List<ResourceNew> temp = new ArrayList<ResourceNew>();
     GridView vocabDashboardGridview;
     TextView userTextView, descriptionTextView, titleTextView;
     ImageView vocabSetImageView, userIconImageView;
-    VocabDashGridviewAdapter vocabDashGridviewAdapter;
+    public VocabDashGridviewAdapter vocabDashGridviewAdapter;
     Resources resources;
     SearchView mySearchView;
     EditText sEditText;
@@ -130,4 +130,5 @@ public class VocabDashboard extends AppCompatActivity {
         i.putExtra("check", 1);
         startActivity(i);
     }
+
 }

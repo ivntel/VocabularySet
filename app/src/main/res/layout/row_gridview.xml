@@ -101,7 +101,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:text="Button" />
+                android:text="Take Vocabulary Test"
+                />
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
