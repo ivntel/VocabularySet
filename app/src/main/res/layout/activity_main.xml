@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:hint="Enter the user name"
-        android:text="shahstudent"
+        android:text="ivanstudent"
          />
     <EditText
         android:id="@+id/password"

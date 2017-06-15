@@ -5,6 +5,7 @@ package com.example.geniusplaza.vocabularyset.Retrofit;
  */
 
 import com.example.geniusplaza.vocabularyset.POJO.AuthToken;
+import com.example.geniusplaza.vocabularyset.POJO.CreateResource;
 import com.example.geniusplaza.vocabularyset.POJO.ResourceNew;
 import com.example.geniusplaza.vocabularyset.POJO.ResourceRequest;
 import com.example.geniusplaza.vocabularyset.POJO.Resources;
@@ -33,5 +34,10 @@ public interface GeniusApi {
 
     @POST("api/get_resources/")
     Call<Resources> postGetResources(@Header("Authorization") String authorization, @Body ResourceRequest resourceRequest);
+
+    @FormUrlEncoded
+    @POST("api/create_resource/")
+    Call<CreateResource> createVocabSet(@Header("Authorization") String authorization, @Query("title") String title, @Query("description") String description, @Query("language_id") String lid, @Field("type_id") String type);
+
 
 }

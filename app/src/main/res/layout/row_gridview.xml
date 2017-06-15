@@ -73,7 +73,8 @@
                 android:layout_alignEnd="@+id/vocabDashDescription"
                 android:clickable="true"
                 app:fabSize="mini"
-                app:srcCompat="@drawable/ic_action_name" />
+                app:srcCompat="@drawable/ic_action_name"
+                android:onClick="editVocabSetClicked"/>
 
             <ImageView
                 android:id="@+id/vocabDashUserIcon"
