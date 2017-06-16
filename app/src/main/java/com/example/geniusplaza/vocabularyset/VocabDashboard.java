@@ -62,7 +62,37 @@ public class VocabDashboard extends AppCompatActivity {
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Log.d("access token", pref.getString("access_token", ""));
-        ResourceRequest resourceRequest = new ResourceRequest("1", "vocabularyset", "");
+        ResourceRequest resourceRequest = new ResourceRequest("1", "vocabularyset", "", "True");
+        RestClient.getExampleApi().postGetResources("Bearer " + pref.getString("access_token", ""), resourceRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<Resources>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Resources value) {
+                Log.d("Successful response", "in VocabDashboard");
+                temp = value.getResources();
+                resources = value;
+                vocabDashGridviewAdapter.updateData(value);
+                Log.d("TRYY", temp.get(0).getDescription());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.d("Not successful response", "in VocabDashboard");
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+    public void allVocabSetClicked(View v){
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Log.d("access token", pref.getString("access_token", ""));
+        ResourceRequest resourceRequest = new ResourceRequest("1", "vocabularyset", "", "False");
         RestClient.getExampleApi().postGetResources("Bearer " + pref.getString("access_token", ""), resourceRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<Resources>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -91,7 +121,7 @@ public class VocabDashboard extends AppCompatActivity {
     }
     public void searchButtonClicked(View v){
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        ResourceRequest resourceRequest = new ResourceRequest("1", "vocabularyset", sEditText.getText().toString());
+        ResourceRequest resourceRequest = new ResourceRequest("1", "vocabularyset", sEditText.getText().toString(),"False");
         RestClient.getExampleApi().postGetResources("Bearer " + pref.getString("access_token", ""), resourceRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<Resources>() {
             @Override
             public void onSubscribe(Disposable d) {

@@ -13,11 +13,14 @@ public class ResourceRequest {
     private String type;
     @SerializedName("keywords")
     private String keywords;
+    @SerializedName("my_resources")
+    private String my_resources;
 
-    public ResourceRequest(String lid, String type, String keywords) {
+    public ResourceRequest(String lid, String type, String keywords, String myResources) {
         this.lid = lid;
         this.type = type;
         this.keywords = keywords;
+        this.my_resources = myResources;
     }
 
     public String getLid() {

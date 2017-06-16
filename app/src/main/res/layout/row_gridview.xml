@@ -3,16 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/vocabDashLayout"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="20dp"
+    android:background="#CCCCCC"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
 
 
     <android.support.v7.widget.CardView
-        android:layout_width="368dp"
-        android:layout_height="495dp"
+        android:layout_width="315dp"
+        android:layout_height="400dp"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        tools:layout_editor_absoluteX="15dp"
+        tools:layout_editor_absoluteY="16dp"
+        app:cardCornerRadius="25dp"
+        app:cardBackgroundColor="#6699CC"
+       >
 
 
         <RelativeLayout
@@ -22,78 +29,82 @@
             <TextView
                 android:id="@+id/vocabDashTitleTextView"
                 android:layout_width="367dp"
-                android:layout_height="25dp"
+                android:layout_height="45dp"
+                android:gravity="center"
                 android:text="TextView"
                 tools:layout_editor_absoluteX="8dp"
-                tools:layout_editor_absoluteY="16dp" />
+                tools:layout_editor_absoluteY="16dp"
+                android:inputType="textMultiLine"/>
 
             <ImageView
                 android:id="@+id/vocabSetImage"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_below="@+id/vocabDashTitleTextView"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="19dp"
-                app:srcCompat="@mipmap/ic_launcher" />
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                app:srcCompat="@mipmap/ic_launcher"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/vocabDashTitleTextView" />
 
             <TextView
                 android:id="@+id/vocabDashDescription"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/vocabSetImage"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="12dp"
-                android:text="TextView" />
+                android:layout_above="@+id/vocabDashSubmitForApprovalFB"
+                android:layout_alignEnd="@+id/vocabDashTitleTextView"
+                android:layout_alignParentStart="true"
+                android:inputType="textMultiLine"
+                android:text="TextView"
+                android:gravity="center"
+                android:layout_below="@+id/vocabSetImage" />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/vocabDashSubmitForApprovalFB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/vocabDashDescription"
-                android:layout_centerVertical="true"
+                android:layout_alignTop="@+id/vocabDashDeleteFB"
                 android:clickable="true"
                 app:fabSize="mini"
-                app:srcCompat="@drawable/ic_action_name" />
+                app:srcCompat="@drawable/ic_submit"
+                android:layout_alignStart="@+id/vocabDashUserIcon" />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/vocabDashDeleteFB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/vocabDashUserName"
                 android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
+                android:layout_marginBottom="39dp"
                 android:clickable="true"
                 app:fabSize="mini"
-                app:srcCompat="@drawable/ic_action_name" />
+                app:srcCompat="@drawable/ic_delete" />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/vocabDashEditFB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/vocabDashDeleteFB"
-                android:layout_alignEnd="@+id/vocabDashDescription"
                 android:clickable="true"
+                android:onClick="editVocabSetClicked"
                 app:fabSize="mini"
-                app:srcCompat="@drawable/ic_action_name"
-                android:onClick="editVocabSetClicked"/>
+                app:srcCompat="@drawable/ic_edit"
+                android:layout_below="@+id/vocabDashDescription"
+                android:layout_alignEnd="@+id/vocabDashUserName" />
 
             <ImageView
                 android:id="@+id/vocabDashUserIcon"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:layout_alignEnd="@+id/vocabDashSubmitForApprovalFB"
-                android:layout_below="@+id/vocabDashSubmitForApprovalFB"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="70dp"
-                app:srcCompat="@mipmap/ic_launcher" />
+                app:srcCompat="@mipmap/ic_launcher"
+                android:layout_above="@+id/vocabDashTakeTestButton"
+                android:layout_alignStart="@+id/vocabDashTakeTestButton" />
 
             <TextView
                 android:id="@+id/vocabDashUserName"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="22dp"
                 android:text="TextView"
-                android:layout_alignBottom="@+id/vocabDashUserIcon"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="25dp" />
+                android:layout_above="@+id/vocabDashTakeTestButton"
+                android:layout_alignEnd="@+id/vocabDashTakeTestButton" />
 
             <Button
                 android:id="@+id/vocabDashTakeTestButton"
@@ -101,8 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:text="Take Vocabulary Test"
-                />
+                android:text="Take Vocabulary Test" />
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
