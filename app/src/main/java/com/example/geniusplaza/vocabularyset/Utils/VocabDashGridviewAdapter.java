@@ -3,6 +3,7 @@ package com.example.geniusplaza.vocabularyset.Utils;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.util.Log;
@@ -92,8 +93,15 @@ public class VocabDashGridviewAdapter extends BaseAdapter {
         holder.userTextView.setText(resourceNew.getCreatorUsername());
         holder.descriptionTextView.setText(resourceNew.getDescription());
         holder.titleTextView.setText(resourceNew.getTitle());
-        Glide.with(mContext).load(resourceNew.getResourceImage()).into(holder.vocabSetImageView);
-        Glide.with(mContext).load(resourceNew.getIcon()).into(holder.userIconImageView);
+
+        if(resourceNew.getResourceImage() != ""){
+            Glide.with(mContext).load(resourceNew.getResourceImage()).into(holder.vocabSetImageView);
+        }
+        if(resourceNew.getIcon() != "") {
+            Glide.with(mContext).load(resourceNew.getIcon()).into(holder.userIconImageView);
+        }
+        //Glide.with(mContext).load(resourceNew.getResourceImage()).into(holder.vocabSetImageView);
+        //Glide.with(mContext).load(resourceNew.getIcon()).into(holder.userIconImageView);
         holder.takeTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

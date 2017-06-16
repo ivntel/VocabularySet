@@ -8,8 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.geniusplaza.vocabularyset.POJO.AuthToken;
@@ -25,17 +28,20 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button loginButton;
     GeniusApi geniusApi;
     EditText uname, pword;
     String userName, password, secretKey;
     ApiConstants apiConstants;
     public AuthToken authToken;
     public  String accessToken;
+    Button loginButton;
+    ProgressBar mProgressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        loginButton = (Button) findViewById(R.id.loginbutton);
+        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar_login);
         apiConstants = new ApiConstants();
         authToken = new AuthToken();
 
@@ -52,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             Log.d("Main Activity","API call");
+            mProgressBar.setVisibility(View.VISIBLE);
             secretKey = apiConstants.getBase64();
             RestClient.getExampleApi().postCredentials("Basic "+secretKey, userName, password, "password").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<AuthToken>() {
                 @Override
@@ -69,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                     editor.apply();
                     String temp = pref.getString("access_token","");
                     Log.d("aaaaaaaaaaa",temp);
+                    mProgressBar.setVisibility(View.GONE);
                     Intent i = new Intent(getApplicationContext(), VocabDashboard.class);
                     startActivity(i);
 
@@ -77,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onError(Throwable e) {
                     Toast.makeText(MainActivity.this, "1st token request fail", Toast.LENGTH_LONG).show();
+                    mProgressBar.setVisibility(View.GONE);
                 }
 
                 @Override

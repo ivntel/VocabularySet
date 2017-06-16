@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">VocabularySet</string>
     <string name="title_activity_vocab_dashboard">VocabDashboard</string>
+    <integer name="swing_anim_time">750</integer>
+    <integer name="card_flip_time_full">500</integer>
+    <integer name="card_flip_time_half">500</integer>
 </resources>

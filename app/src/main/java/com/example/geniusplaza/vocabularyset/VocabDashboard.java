@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.geniusplaza.vocabularyset.POJO.Resource;
@@ -44,6 +45,7 @@ public class VocabDashboard extends AppCompatActivity {
     Resources resources;
     SearchView mySearchView;
     EditText sEditText;
+    ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class VocabDashboard extends AppCompatActivity {
         setContentView(R.layout.activity_vocab_dashboard);
         sEditText = (EditText)findViewById(R.id.searchEditText);
         vocabDashboardGridview = (GridView) findViewById(R.id.grid_view);
+        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
         vocabDashGridviewAdapter = new VocabDashGridviewAdapter(temp,this);
         vocabDashboardGridview.setAdapter(vocabDashGridviewAdapter);
@@ -62,6 +65,8 @@ public class VocabDashboard extends AppCompatActivity {
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Log.d("access token", pref.getString("access_token", ""));
+        mProgressBar.setVisibility(View.VISIBLE);
+
         ResourceRequest resourceRequest = new ResourceRequest("1", "vocabularyset", "", "True");
         RestClient.getExampleApi().postGetResources("Bearer " + pref.getString("access_token", ""), resourceRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<Resources>() {
             @Override
@@ -76,11 +81,13 @@ public class VocabDashboard extends AppCompatActivity {
                 resources = value;
                 vocabDashGridviewAdapter.updateData(value);
                 Log.d("TRYY", temp.get(0).getDescription());
+                mProgressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onError(Throwable e) {
                 Log.d("Not successful response", "in VocabDashboard");
+                mProgressBar.setVisibility(View.GONE);
             }
 
             @Override
@@ -90,6 +97,8 @@ public class VocabDashboard extends AppCompatActivity {
         });
     }
     public void allVocabSetClicked(View v){
+        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        mProgressBar.setVisibility(View.VISIBLE);
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Log.d("access token", pref.getString("access_token", ""));
         ResourceRequest resourceRequest = new ResourceRequest("1", "vocabularyset", "", "False");
@@ -102,6 +111,7 @@ public class VocabDashboard extends AppCompatActivity {
             @Override
             public void onNext(Resources value) {
                 Log.d("Successful response", "in VocabDashboard");
+                mProgressBar.setVisibility(View.GONE);
                 temp = value.getResources();
                 resources = value;
                 vocabDashGridviewAdapter.updateData(value);
@@ -111,6 +121,7 @@ public class VocabDashboard extends AppCompatActivity {
             @Override
             public void onError(Throwable e) {
                 Log.d("Not successful response", "in VocabDashboard");
+                mProgressBar.setVisibility(View.GONE);
             }
 
             @Override
@@ -121,6 +132,7 @@ public class VocabDashboard extends AppCompatActivity {
     }
     public void searchButtonClicked(View v){
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        mProgressBar.setVisibility(View.VISIBLE);
         ResourceRequest resourceRequest = new ResourceRequest("1", "vocabularyset", sEditText.getText().toString(),"False");
         RestClient.getExampleApi().postGetResources("Bearer " + pref.getString("access_token", ""), resourceRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<Resources>() {
             @Override
@@ -135,11 +147,13 @@ public class VocabDashboard extends AppCompatActivity {
                 resources = value;
                 vocabDashGridviewAdapter.updateData(value);
                 Log.d("TRYY", temp.get(0).getDescription());
+                mProgressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onError(Throwable e) {
                 Log.d("Not successful response", "in VocabDashboard");
+                mProgressBar.setVisibility(View.GONE);
             }
 
             @Override

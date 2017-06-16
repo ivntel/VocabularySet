@@ -4,14 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.geniusplaza.vocabularyset.ShowActivity">
+    tools:context="com.example.geniusplaza.vocabularyset.ShowActivity"
+    android:id="@+id/constraintFlip"
+    >
 
     <android.support.v7.widget.CardView
         android:layout_width="365dp"
         android:layout_height="244dp"
         tools:layout_editor_absoluteX="10dp"
         tools:layout_editor_absoluteY="16dp"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        android:onClick="cardViewClicked"
+        android:id="@+id/firstCard">
 
 
         <RelativeLayout
@@ -26,7 +30,10 @@
                 android:layout_marginTop="30dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:gravity="center_horizontal"/>
+                android:gravity="center"
+                android:fontFamily="casual"
+                android:textAllCaps="true"
+                />
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/floatingActionButtonNextWord"
@@ -84,23 +91,13 @@
                 android:text="3"
                 android:layout_alignTop="@+id/floatingActionButtonNextWord" />
 
-            <TextView
-                android:id="@+id/textViewMeaning"
+            <ProgressBar
+                android:id="@+id/progress_bar_vocab_test"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/textView9"
-                android:layout_alignTop="@+id/textViewWord"
-                android:layout_marginTop="26dp"
-                android:text="TextView" />
-
-            <TextView
-                android:id="@+id/textViewSentence"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/textViewMeaning"
-                android:layout_below="@+id/textViewMeaning"
-                android:layout_marginTop="18dp"
-                android:text="TextView" />
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                android:indeterminateTint="#000000"/>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>
