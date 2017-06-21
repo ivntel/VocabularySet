@@ -2,9 +2,6 @@ package com.example.geniusplaza.vocabularyset.Utils;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
-import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,21 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.GridView;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.geniusplaza.vocabularyset.POJO.Resource;
+import com.example.geniusplaza.vocabularyset.EditVocabSet;
 import com.example.geniusplaza.vocabularyset.POJO.ResourceNew;
 import com.example.geniusplaza.vocabularyset.POJO.Resources;
 import com.example.geniusplaza.vocabularyset.R;
 import com.bumptech.glide.Glide;
-import com.example.geniusplaza.vocabularyset.Retrofit.GeniusApi;
 import com.example.geniusplaza.vocabularyset.ShowActivity;
 import com.example.geniusplaza.vocabularyset.VocabDashboard;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -82,7 +76,7 @@ public class VocabDashGridviewAdapter extends BaseAdapter {
             holder.userIconImageView = (ImageView) view.findViewById(R.id.vocabDashUserIcon);
             holder.vocabLayout = (ConstraintLayout)view.findViewById(R.id.vocabDashLayout);
             holder.takeTest = (Button)view.findViewById(R.id.vocabDashTakeTestButton);
-
+            EditVocabSet.resourceId = mResources.get(position).getId().toString();
             view.setTag(holder);
         }
         else{

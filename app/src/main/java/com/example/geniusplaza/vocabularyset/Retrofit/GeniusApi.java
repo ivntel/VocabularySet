@@ -4,17 +4,11 @@ package com.example.geniusplaza.vocabularyset.Retrofit;
  * Created by geniusplaza on 6/13/17.
  */
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.util.Log;
-
 import com.example.geniusplaza.vocabularyset.POJO.AuthToken;
 import com.example.geniusplaza.vocabularyset.POJO.CreateResource;
-import com.example.geniusplaza.vocabularyset.POJO.ResourceNew;
 import com.example.geniusplaza.vocabularyset.POJO.ResourceRequest;
 import com.example.geniusplaza.vocabularyset.POJO.Resources;
 import com.example.geniusplaza.vocabularyset.POJO.WordsResource;
-import com.example.geniusplaza.vocabularyset.ShowActivity;
 
 import io.reactivex.Observable;
 import retrofit2.Call;
@@ -50,4 +44,8 @@ public interface GeniusApi {
 
     @GET("api/get_resource/{id}")
     Observable<WordsResource> flashcardCreate(@Header("Authorization") String authorization, @Path("id")String id );
+
+    @FormUrlEncoded
+    @POST("api/create_word/{id}/")
+    Observable<WordsResource> addVocabWords (@Header("Authorization") String authorization, @Query("order") String order, @Query("name") String name, @Query("meaning") String meaning, @Query("sentence") String sentence, @Query("type_id") String type_id, @Path("id")String id );
 }

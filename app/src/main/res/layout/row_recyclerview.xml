@@ -5,43 +5,46 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:layout_width="73dp"
-        android:layout_height="77dp"
-        tools:layout_editor_absoluteY="16dp"
-        tools:layout_editor_absoluteX="16dp" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/spinnerWordType"
         android:layout_width="134dp"
         android:layout_height="48dp"
         tools:layout_editor_absoluteY="110dp"
-        tools:layout_editor_absoluteX="16dp" />
+        tools:layout_editor_absoluteX="16dp"
+        tools:ignore="MissingConstraints" />
 
     <EditText
-        android:layout_width="141dp"
-        android:layout_height="72dp"
-        tools:layout_editor_absoluteY="18dp"
-        tools:layout_editor_absoluteX="165dp" />
+        android:layout_width="289dp"
+        android:layout_height="79dp"
+        tools:layout_editor_absoluteY="11dp"
+        tools:layout_editor_absoluteX="17dp"
+        android:id="@+id/textViewAddWord"
+        tools:ignore="MissingConstraints"/>
     <EditText
         android:layout_width="205dp"
         android:layout_height="77dp"
         tools:layout_editor_absoluteY="107dp"
-        tools:layout_editor_absoluteX="165dp" />
+        tools:layout_editor_absoluteX="165dp"
+        android:id="@+id/textViewAddMeaning"
+        tools:ignore="MissingConstraints"/>
     <EditText
         android:layout_width="357dp"
         android:layout_height="81dp"
         tools:layout_editor_absoluteY="197dp"
-        tools:layout_editor_absoluteX="16dp" />
+        tools:layout_editor_absoluteX="16dp"
+        android:id="@+id/textViewAddSentence"
+        tools:ignore="MissingConstraints"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/floatingActionButtonDeleteAddWord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
         app:fabSize="mini"
         app:srcCompat="@android:drawable/ic_delete"
         tools:layout_editor_absoluteX="326dp"
-        tools:layout_editor_absoluteY="26dp" />
+        tools:layout_editor_absoluteY="26dp"
+        tools:ignore="MissingConstraints"/>
 
 </android.support.constraint.ConstraintLayout>

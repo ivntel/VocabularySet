@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -17,11 +15,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.geniusplaza.vocabularyset.POJO.Resource;
 import com.example.geniusplaza.vocabularyset.POJO.ResourceNew;
 import com.example.geniusplaza.vocabularyset.POJO.ResourceRequest;
 import com.example.geniusplaza.vocabularyset.POJO.Resources;
-import com.example.geniusplaza.vocabularyset.Retrofit.GeniusApi;
 import com.example.geniusplaza.vocabularyset.Retrofit.RestClient;
 import com.example.geniusplaza.vocabularyset.Utils.VocabDashGridviewAdapter;
 
@@ -31,9 +27,6 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class VocabDashboard extends AppCompatActivity {
 
@@ -174,5 +167,6 @@ public class VocabDashboard extends AppCompatActivity {
         i.putExtra("check", 1);
         startActivity(i);
     }
+
 
 }

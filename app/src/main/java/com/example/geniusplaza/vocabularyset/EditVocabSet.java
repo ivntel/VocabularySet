@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -15,7 +16,9 @@ import android.widget.Toast;
 
 import com.example.geniusplaza.vocabularyset.POJO.CreateResource;
 import com.example.geniusplaza.vocabularyset.POJO.ResourceRequest;
+import com.example.geniusplaza.vocabularyset.POJO.WordsResource;
 import com.example.geniusplaza.vocabularyset.Retrofit.RestClient;
+import com.example.geniusplaza.vocabularyset.Utils.AddWordAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +33,13 @@ import retrofit2.Response;
 public class EditVocabSet extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    EditText title,description;
+    EditText title,description,word,meaning,sentence;
+    RecyclerView vocabularySetRecyclerView;
+    LinearLayoutManager mLayoutManager;
     Spinner spinnerLanguage;
     public String text, tempLangText;
-
+    public static String resourceId = null;
+    AddWordAdapter mAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,12 +66,45 @@ public class EditVocabSet extends AppCompatActivity {
 
 
         Bundle extras = getIntent().getExtras();
+        Log.d("Check intent value", (String.valueOf(extras.getInt("check")) ));
         if (extras.getInt("check") == 0 ){
             recyclerView.setVisibility(View.GONE);
         }
         else {
             recyclerView.setVisibility(View.VISIBLE);
+            Log.d("Edit0 Clicked", "Recycler view");
+            Log.d("value of resource id", resourceId);
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            RestClient.getExampleApi().flashcardCreate("Bearer " + pref.getString("access_token", ""),resourceId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<WordsResource>() {
+                @Override
+                public void onSubscribe(Disposable d) {
+
+                }
+
+                @Override
+                public void onNext(WordsResource value) {
+                    //AddWordAdapter addWordAdapter = new AddWordAdapter(getApplicationContext(),value.getWords());
+                    Log.d("abcc", value.toString());
+                    vocabularySetRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewEditVS);
+                    vocabularySetRecyclerView.setHasFixedSize(false);
+                    mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+                    vocabularySetRecyclerView.setLayoutManager(mLayoutManager);
+                    mAdapter = new AddWordAdapter(getApplicationContext(), value.getWords());
+                    vocabularySetRecyclerView.setAdapter(mAdapter);
+                }
+
+                @Override
+                public void onError(Throwable e) {
+
+                }
+
+                @Override
+                public void onComplete() {
+
+                }
+            });
         }
+
     }
 
     public void saveButtonClicked(View v){
