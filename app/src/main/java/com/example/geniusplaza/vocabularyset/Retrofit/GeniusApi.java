@@ -47,5 +47,5 @@ public interface GeniusApi {
 
     @FormUrlEncoded
     @POST("api/create_word/{id}/")
-    Observable<WordsResource> addVocabWords (@Header("Authorization") String authorization, @Query("order") String order, @Query("name") String name, @Query("meaning") String meaning, @Query("sentence") String sentence, @Query("type_id") String type_id, @Path("id")String id );
+    Observable<WordsResource> addVocabWords(@Header("Authorization") String authorization, @Query("order") String order, @Query("name") String name, @Query("meaning") String meaning, @Query("sentence") String sentence, @Query("type_id") String type_id, @Path("id")String id );
 }

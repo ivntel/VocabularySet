@@ -72,6 +72,14 @@
                 android:text="CANCEL" />
 
             <Button
+                android:id="@+id/buttonAddNewWord"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:onClick="addNewWordButtonClicked"
+                android:text="ADD NEW WORD"
+                android:layout_centerHorizontal="true"/>
+            <Button
                 android:id="@+id/buttonSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

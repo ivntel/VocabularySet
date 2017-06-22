@@ -1,13 +1,16 @@
 package com.example.geniusplaza.vocabularyset;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -147,4 +150,61 @@ public class EditVocabSet extends AppCompatActivity {
         Intent i = new Intent(this, VocabDashboard.class);
         startActivity(i);
     }
+    public void addNewWordButtonClicked(View v){
+        //Toast.makeText(getApplicationContext(),"add new word clicked", Toast.LENGTH_SHORT).show();
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.row_recyclerview, null);
+        dialogBuilder.setView(dialogView);
+        final EditText wordName, wordMeaning, wordSentence, wordOrder;
+        Spinner wordType;
+        wordName = (EditText) dialogView.findViewById(R.id.textViewAddWord);
+        wordMeaning = (EditText) dialogView.findViewById(R.id.textViewAddMeaning);
+        wordSentence = (EditText) dialogView.findViewById(R.id.textViewAddSentence);
+        wordOrder =(EditText) dialogView.findViewById(R.id.textViewOrder);
+        wordType = (Spinner) dialogView.findViewById(R.id.spinnerWordType);
+        List<String> lang = new ArrayList<String>();
+        String[] langItems = new String []{"Noun", "Verb", "Adjective", "Adverb", "Conjuction", "Abbreviation", "Exclamation", "Preposition", "Pronoun", "Article", "Determiner"};
+        ArrayAdapter<String> myadapter = new ArrayAdapter<String>(dialogView.getContext(), android.R.layout.simple_spinner_item, langItems);
+        myadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        wordType.setAdapter(myadapter);
+
+        dialogBuilder.setTitle("Add new Word");
+        dialogBuilder.setMessage("Enter text below");
+        dialogBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //do something with edt.getText().toString();
+                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                RestClient.getExampleApi().addVocabWords("Bearer " + pref.getString("access_token", ""), wordOrder.getText().toString(),wordName.getText().toString(),wordMeaning.getText().toString(), wordSentence.getText().toString(),"1",resourceId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<WordsResource>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(WordsResource value) {
+                        Toast.makeText(getApplicationContext(),"Successfully saved", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+            }
+        });
+        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //pass
+            }
+        });
+        AlertDialog b = dialogBuilder.create();
+        b.show();
+    }
+
 }

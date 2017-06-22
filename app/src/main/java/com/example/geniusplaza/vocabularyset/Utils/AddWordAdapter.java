@@ -66,11 +66,13 @@ public class AddWordAdapter extends RecyclerView.Adapter<AddWordAdapter.ViewHold
             holder.wordName.setText(vocabularySetContent.getName());
             holder.wordMeaning.setText(vocabularySetContent.getMeaning());
             holder.wordSentence.setText(vocabularySetContent.getSentence());
+            holder.wordOrder.setText(String.valueOf(vocabularySetContent.getOrder()));
         }
         else{
             holder.wordName.setText("Enter the word");
             holder.wordMeaning.setText("Enter the Meaning");
             holder.wordSentence.setText("Enter the sentence");
+            holder.wordOrder.setText("Enter the order");
         }
 
     }
@@ -80,7 +82,7 @@ public class AddWordAdapter extends RecyclerView.Adapter<AddWordAdapter.ViewHold
     // Return the size of your dataset (invoked by the layout manager)
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        EditText wordName, wordMeaning, wordSentence;
+        EditText wordName, wordMeaning, wordSentence, wordOrder;
         Spinner wordType;
 
         public ViewHolder(View v) {
@@ -88,6 +90,7 @@ public class AddWordAdapter extends RecyclerView.Adapter<AddWordAdapter.ViewHold
             wordName = (EditText) v.findViewById(R.id.textViewAddWord);
             wordMeaning = (EditText) v.findViewById(R.id.textViewAddMeaning);
             wordSentence = (EditText) v.findViewById(R.id.textViewAddSentence);
+            wordOrder =(EditText) v.findViewById(R.id.textViewOrder);
             wordType = (Spinner) v.findViewById(R.id.spinnerWordType);
             List<String> lang = new ArrayList<String>();
             String[] langItems = new String []{"Noun", "Verb", "Adjective", "Adverb", "Conjuction", "Abbreviation", "Exclamation", "Preposition", "Pronoun", "Article", "Determiner"};
