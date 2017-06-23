@@ -33,7 +33,7 @@ public interface GeniusApi {
 
     @FormUrlEncoded
     @POST("o/token/")
-    Call<AuthToken> postRefreshToken(@Header("Authorization") String authorization, @Query("refresh_token") String refreshToken, @Field("grant_type") String grantType);
+    Observable<AuthToken> postRefreshToken(@Header("Authorization") String authorization, @Query("refresh_token") String refreshToken, @Field("grant_type") String grantType);
 
     @POST("api/get_resources/")
     Observable<Resources> postGetResources(@Header("Authorization") String authorization, @Body ResourceRequest resourceRequest);

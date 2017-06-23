@@ -56,6 +56,7 @@ public class ShowActivity extends AppCompatActivity {
         curPos.setText("1");
         mProgressBar.setVisibility(View.VISIBLE);
 
+        MainActivity.getRefreshToken(ApiConstants.refreshToken);
         RestClient.getExampleApi().flashcardCreate("Bearer " + ApiConstants.accessToken, resId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<WordsResource>() {
             @Override
             public void onSubscribe(Disposable d) {

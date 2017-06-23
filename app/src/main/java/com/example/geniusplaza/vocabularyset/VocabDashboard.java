@@ -60,6 +60,7 @@ public class VocabDashboard extends AppCompatActivity {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         mProgressBar.setVisibility(View.VISIBLE);
 
+        MainActivity.getRefreshToken(ApiConstants.refreshToken);
         ResourceRequest resourceRequest = new ResourceRequest("1", "vocabularyset", "", "True");
         RestClient.getExampleApi().postGetResources("Bearer " + ApiConstants.accessToken, resourceRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<Resources>() {
             @Override
@@ -92,6 +93,7 @@ public class VocabDashboard extends AppCompatActivity {
     public void allVocabSetClicked(View v){
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         mProgressBar.setVisibility(View.VISIBLE);
+        MainActivity.getRefreshToken(ApiConstants.refreshToken);
         ResourceRequest resourceRequest = new ResourceRequest("1", "vocabularyset", "", "False");
         RestClient.getExampleApi().postGetResources("Bearer " + ApiConstants.accessToken, resourceRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<Resources>() {
             @Override
@@ -123,6 +125,7 @@ public class VocabDashboard extends AppCompatActivity {
     }
     public void searchButtonClicked(View v){
         mProgressBar.setVisibility(View.VISIBLE);
+        MainActivity.getRefreshToken(ApiConstants.refreshToken);
         ResourceRequest resourceRequest = new ResourceRequest("1", "vocabularyset", sEditText.getText().toString(),"False");
         RestClient.getExampleApi().postGetResources("Bearer " + ApiConstants.accessToken, resourceRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<Resources>() {
             @Override

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 public class ChooseActivity extends AppCompatActivity {
 
@@ -27,6 +28,10 @@ public class ChooseActivity extends AppCompatActivity {
     public void landmarkButtonClicked (View v){
         Intent i = new Intent(this, MainActivityGCV.class);
         optSelected = "l";
+        startActivity(i);
+    }
+    public void goToWordsDBbutton(View view) {
+        Intent i = new Intent(this, WordsDatabase.class);
         startActivity(i);
     }
 }

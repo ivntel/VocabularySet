@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -44,6 +45,7 @@ public class EditVocabSet extends AppCompatActivity {
     public String text, tempLangText;
     public static String resourceId = null;
     AddWordAdapter mAdapter;
+    ProgressBar mProgressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +53,7 @@ public class EditVocabSet extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerViewEditVS);
         title = (EditText)findViewById(R.id.editTextTitle);
         description = (EditText)findViewById(R.id.editTextDescription);
+        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar_edit);
 
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -77,10 +80,11 @@ public class EditVocabSet extends AppCompatActivity {
             recyclerView.setVisibility(View.GONE);
         }
         else {
+            mProgressBar.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.VISIBLE);
             Log.d("Edit0 Clicked", "Recycler view");
             Log.d("value of resource id", resourceId);
-
+            MainActivity.getRefreshToken(ApiConstants.refreshToken);
             RestClient.getExampleApi().flashcardCreate("Bearer " + ApiConstants.accessToken,resourceId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<WordsResource>() {
                 @Override
                 public void onSubscribe(Disposable d) {
@@ -97,6 +101,7 @@ public class EditVocabSet extends AppCompatActivity {
                     vocabularySetRecyclerView.setLayoutManager(mLayoutManager);
                     mAdapter = new AddWordAdapter(getApplicationContext(), value.getWords());
                     vocabularySetRecyclerView.setAdapter(mAdapter);
+                    mProgressBar.setVisibility(View.GONE);
                 }
 
                 @Override
@@ -118,7 +123,7 @@ public class EditVocabSet extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Please input the needed information", Toast.LENGTH_SHORT).show();
         }
         else {
-
+            MainActivity.getRefreshToken(ApiConstants.refreshToken);
             RestClient.getExampleApi().createVocabSet("Bearer " + ApiConstants.accessToken, title.getText().toString(), description.getText().toString(), "1", "4").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<CreateResource>() {
                 @Override
                 public void onSubscribe(Disposable d) {
@@ -175,6 +180,7 @@ public class EditVocabSet extends AppCompatActivity {
         dialogBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 //do something with edt.getText().toString();
+                MainActivity.getRefreshToken(ApiConstants.refreshToken);
                 RestClient.getExampleApi().addVocabWords("Bearer " + ApiConstants.accessToken, wordOrder.getText().toString(),wordName.getText().toString(),wordMeaning.getText().toString(), wordSentence.getText().toString(),"1",resourceId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<WordsResource>() {
                     @Override
                     public void onSubscribe(Disposable d) {

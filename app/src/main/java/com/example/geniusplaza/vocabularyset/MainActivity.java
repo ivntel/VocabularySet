@@ -2,6 +2,7 @@ package com.example.geniusplaza.vocabularyset;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -89,5 +90,41 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+    public static void getRefreshToken(final String refreshToken) {
+        ApiConstants apiConstants = new ApiConstants();
+        RestClient.getExampleApi().postRefreshToken("Basic " + apiConstants.getBase64(), refreshToken, "refresh_token").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<AuthToken>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(AuthToken value) {
+                ApiConstants.accessToken = value.getAccessToken();
+                ApiConstants.refreshToken = value.getRefreshToken();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
+
+        /*final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("Inside delay",refreshToken);
+                RestClient.getExampleApi().postRefreshToken("Basic " + secretKey, refreshToken,"refresh_token").enqueue(refreshCallback);
+            }
+        },3000);
+    }*/
     }
 }
