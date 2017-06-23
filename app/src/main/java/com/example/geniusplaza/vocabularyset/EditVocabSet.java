@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -52,6 +53,8 @@ public class EditVocabSet extends AppCompatActivity {
         description = (EditText)findViewById(R.id.editTextDescription);
 
 
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
         spinnerLanguage = (Spinner)findViewById(R.id.spinnerLanguage);
         List<String> lang = new ArrayList<String>();
         String[] langItems = new String []{"English", "Spanish"};
@@ -77,8 +80,8 @@ public class EditVocabSet extends AppCompatActivity {
             recyclerView.setVisibility(View.VISIBLE);
             Log.d("Edit0 Clicked", "Recycler view");
             Log.d("value of resource id", resourceId);
-            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            RestClient.getExampleApi().flashcardCreate("Bearer " + pref.getString("access_token", ""),resourceId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<WordsResource>() {
+
+            RestClient.getExampleApi().flashcardCreate("Bearer " + ApiConstants.accessToken,resourceId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<WordsResource>() {
                 @Override
                 public void onSubscribe(Disposable d) {
 
@@ -111,14 +114,12 @@ public class EditVocabSet extends AppCompatActivity {
     }
 
     public void saveButtonClicked(View v){
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
         if(title.getText().toString() == null || description.getText().toString() == null ){
             Toast.makeText(getApplicationContext(), "Please input the needed information", Toast.LENGTH_SHORT).show();
         }
         else {
 
-            RestClient.getExampleApi().createVocabSet("Bearer " + pref.getString("access_token", ""), title.getText().toString(), description.getText().toString(), "1", "4").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<CreateResource>() {
+            RestClient.getExampleApi().createVocabSet("Bearer " + ApiConstants.accessToken, title.getText().toString(), description.getText().toString(), "1", "4").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<CreateResource>() {
                 @Override
                 public void onSubscribe(Disposable d) {
 
@@ -174,8 +175,7 @@ public class EditVocabSet extends AppCompatActivity {
         dialogBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 //do something with edt.getText().toString();
-                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                RestClient.getExampleApi().addVocabWords("Bearer " + pref.getString("access_token", ""), wordOrder.getText().toString(),wordName.getText().toString(),wordMeaning.getText().toString(), wordSentence.getText().toString(),"1",resourceId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<WordsResource>() {
+                RestClient.getExampleApi().addVocabWords("Bearer " + ApiConstants.accessToken, wordOrder.getText().toString(),wordName.getText().toString(),wordMeaning.getText().toString(), wordSentence.getText().toString(),"1",resourceId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<WordsResource>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 

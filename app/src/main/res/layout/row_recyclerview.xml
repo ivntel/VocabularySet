@@ -8,15 +8,17 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewAddWord"/>
+        android:id="@+id/textViewAddWord"
+        android:hint="Enter Word"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="25dp"
             android:layout_height="wrap_content"
             android:id="@+id/textViewOrder"
+            android:hint="#"
             />
         <Spinner
             android:layout_width="wrap_content"
@@ -27,10 +29,12 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewAddMeaning"/>
+        android:id="@+id/textViewAddMeaning"
+        android:hint="Enter Meaning"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewAddSentence"/>
+        android:id="@+id/textViewAddSentence"
+        android:hint="Enter Sentence"/>
 
 </LinearLayout>

@@ -37,7 +37,8 @@
             <EditText
                 android:id="@+id/searchEditText"
                 android:layout_width="160dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:maxLines="1"/>
 
             <Button
                 android:id="@+id/searchButton"
@@ -61,8 +62,20 @@
     </android.support.design.widget.AppBarLayout>
 
 
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_vocab_dashboard" />
 
-
-    <include layout="@layout/content_vocab_dashboard"
-        android:id="@+id/include" />
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:clickable="true"
+        android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@color/colorPrimary"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="bottom|start"
+        app:srcCompat="@android:drawable/ic_menu_camera"
+        android:onClick="cameraButtonClicked"/>
 </android.support.design.widget.CoordinatorLayout>

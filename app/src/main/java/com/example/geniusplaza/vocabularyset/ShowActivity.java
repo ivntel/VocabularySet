@@ -45,9 +45,6 @@ public class ShowActivity extends AppCompatActivity {
         setContentView(R.layout.activity_show);
         Log.d("ShowActivity test:", resId);
 
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        Log.d("access token", pref.getString("access_token", ""));
-
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar_vocab_test);
         word = (TextView) findViewById(R.id.textViewWord);
         cardView = (CardView) findViewById(R.id.firstCard);
@@ -59,7 +56,7 @@ public class ShowActivity extends AppCompatActivity {
         curPos.setText("1");
         mProgressBar.setVisibility(View.VISIBLE);
 
-        RestClient.getExampleApi().flashcardCreate("Bearer " + pref.getString("access_token", ""), resId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<WordsResource>() {
+        RestClient.getExampleApi().flashcardCreate("Bearer " + ApiConstants.accessToken, resId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<WordsResource>() {
             @Override
             public void onSubscribe(Disposable d) {
 

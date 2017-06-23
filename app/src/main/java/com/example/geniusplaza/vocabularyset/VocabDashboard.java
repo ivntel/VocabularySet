@@ -9,6 +9,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -56,12 +57,11 @@ public class VocabDashboard extends AppCompatActivity {
         setSupportActionBar(toolbar);
         resources = new Resources();
 
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        Log.d("access token", pref.getString("access_token", ""));
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         mProgressBar.setVisibility(View.VISIBLE);
 
         ResourceRequest resourceRequest = new ResourceRequest("1", "vocabularyset", "", "True");
-        RestClient.getExampleApi().postGetResources("Bearer " + pref.getString("access_token", ""), resourceRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<Resources>() {
+        RestClient.getExampleApi().postGetResources("Bearer " + ApiConstants.accessToken, resourceRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<Resources>() {
             @Override
             public void onSubscribe(Disposable d) {
 
@@ -92,10 +92,8 @@ public class VocabDashboard extends AppCompatActivity {
     public void allVocabSetClicked(View v){
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         mProgressBar.setVisibility(View.VISIBLE);
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        Log.d("access token", pref.getString("access_token", ""));
         ResourceRequest resourceRequest = new ResourceRequest("1", "vocabularyset", "", "False");
-        RestClient.getExampleApi().postGetResources("Bearer " + pref.getString("access_token", ""), resourceRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<Resources>() {
+        RestClient.getExampleApi().postGetResources("Bearer " + ApiConstants.accessToken, resourceRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<Resources>() {
             @Override
             public void onSubscribe(Disposable d) {
 
@@ -124,10 +122,9 @@ public class VocabDashboard extends AppCompatActivity {
         });
     }
     public void searchButtonClicked(View v){
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mProgressBar.setVisibility(View.VISIBLE);
         ResourceRequest resourceRequest = new ResourceRequest("1", "vocabularyset", sEditText.getText().toString(),"False");
-        RestClient.getExampleApi().postGetResources("Bearer " + pref.getString("access_token", ""), resourceRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<Resources>() {
+        RestClient.getExampleApi().postGetResources("Bearer " + ApiConstants.accessToken, resourceRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<Resources>() {
             @Override
             public void onSubscribe(Disposable d) {
 
@@ -168,5 +165,8 @@ public class VocabDashboard extends AppCompatActivity {
         startActivity(i);
     }
 
-
+    public void cameraButtonClicked (View v){
+        Intent i = new Intent(this, ChooseActivity.class);
+        startActivity(i);
+    }
 }

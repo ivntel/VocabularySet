@@ -70,12 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onNext(AuthToken value) {
                     Log.d("in main activity","SUCCCESSSS");
                     accessToken = value.getAccessToken();
-                    SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    SharedPreferences.Editor editor = pref.edit();
-                    editor.putString("access_token",accessToken);
-                    editor.apply();
-                    String temp = pref.getString("access_token","");
-                    Log.d("aaaaaaaaaaa",temp);
+                    ApiConstants.accessToken = accessToken;
                     mProgressBar.setVisibility(View.GONE);
                     Intent i = new Intent(getApplicationContext(), VocabDashboard.class);
                     startActivity(i);
