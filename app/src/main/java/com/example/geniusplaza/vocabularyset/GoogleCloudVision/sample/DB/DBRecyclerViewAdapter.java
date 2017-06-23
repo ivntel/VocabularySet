@@ -86,6 +86,7 @@ public class DBRecyclerViewAdapter extends RecyclerView.Adapter<DBRecyclerViewAd
             @Override
             public void onClick(View v) {
                 if (ApiConstants.databaseResId == null){
+                    Toast.makeText(((WordsDatabase) mContext).getApplicationContext(),"CREATE THE VOCAB SET 1ST", Toast.LENGTH_LONG).show();
                     Intent i = new Intent(((WordsDatabase) mContext).getApplicationContext(), EditVocabSet.class);
                     i.putExtra("check", 0);
                     mContext.startActivity(i);
@@ -101,6 +102,8 @@ public class DBRecyclerViewAdapter extends RecyclerView.Adapter<DBRecyclerViewAd
                         @Override
                         public void onNext(AddWordResponse value) {
                             Toast.makeText(((WordsDatabase) mContext).getApplicationContext(), "Added the word", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(((WordsDatabase) mContext).getApplicationContext(), VocabDashboard.class);
+                            mContext.startActivity(i);
                         }
 
                         @Override

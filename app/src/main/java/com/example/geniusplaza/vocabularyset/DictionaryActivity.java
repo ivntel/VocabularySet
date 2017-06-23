@@ -54,25 +54,44 @@ public class DictionaryActivity extends AppCompatActivity {
                 Log.d("checking the api", value.toString());
                 definitionArray = value.getResults();
                 counter = 0;
-                for (Result result : definitionArray) {
-                    if (result.getExamples() != null) {
-                        definition.add(result.getDefinition());
-                        definition.add("\n");
-                        counter = 1;
-                    }
-                    if (counter == 0) {
-                        definition.add(result.getDefinition());
-                        definition.add("\n");
-                    }
+//                for (Result result : definitionArray) {
+//                    if(result.getDefinition() == null){
+//                        definition.add("No Definition Found");
+//                    }
+//                    else{
+//                        if (result.getExamples() != null) {
+//                            definition.add(result.getDefinition());
+//                            definition.add("\n");
+//                            counter = 1;
+//                        }
+//                        if (counter == 0) {
+//                            definition.add(result.getDefinition());
+//                            definition.add("\n");
+//                        }
+//                    }
+//
+//                }
+//                for (Result result : definitionArray) {
+//                    if (result.getExamples() != null) {
+//                        example.add(result.getExamples().toString());
+//                        example.add("\n");
+//                    }
+//                    else{
+//                        example.add("No Sentence found");
+//                    }
+//                }
+                if(definitionArray.get(0).getDefinition() == null){
+                    meaning.setText("No Definition Found");
                 }
-                for (Result result : definitionArray) {
-                    if (result.getExamples() != null) {
-                        example.add(result.getExamples().toString());
-                        example.add("\n");
-                    }
+                else{
+                    meaning.setText(definitionArray.get(0).getDefinition());
                 }
-                meaning.setText(definition.toString());
-                sentence.setText(example.toString());
+                if(definitionArray.get(0).getExamples() == null){
+                    sentence.setText("No Example Found");
+                }
+                else{
+                    sentence.setText(definitionArray.get(0).getExamples().toString());
+                }
 
             }
 

@@ -143,8 +143,13 @@ public class EditVocabSet extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Save successful", Toast.LENGTH_SHORT).show();
                     if(DBRecyclerViewAdapter.createVocabSetCheck == 0){
                         ApiConstants.databaseResId = value.getResourceId().toString();
+
                         DBRecyclerViewAdapter.createVocabSetCheck = 1;
+                        Intent i = new Intent(getApplicationContext(), WordsDatabase.class);
+                        startActivity(i);
                     }
+                    Intent i = new Intent(getApplicationContext(), VocabDashboard.class);
+                    startActivity(i);
                 }
 
                 @Override

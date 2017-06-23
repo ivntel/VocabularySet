@@ -49,4 +49,7 @@ public interface GeniusApi {
 
     @POST("api/create_word/{id}/")
     Observable<AddWordResponse> addVocabWords(@Header("Authorization") String authorization, @Path("id")String id , @Body AddWordBody addWordBody);
+
+    @POST("api/delete_resource/{id}/")
+    Observable<AddWordResponse> deleteVocabSet(@Header("Authorization") String authorization, @Path("id")String id);
 }
