@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("in main activity","SUCCCESSSS");
                     accessToken = value.getAccessToken();
                     ApiConstants.accessToken = accessToken;
+                    Log.d("Accesstoken Login: ", ApiConstants.accessToken);
+                    ApiConstants.refreshToken = value.getRefreshToken();
                     mProgressBar.setVisibility(View.GONE);
                     Intent i = new Intent(getApplicationContext(), VocabDashboard.class);
                     startActivity(i);
@@ -103,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
             public void onNext(AuthToken value) {
                 ApiConstants.accessToken = value.getAccessToken();
                 ApiConstants.refreshToken = value.getRefreshToken();
+                Log.d("Accesstoken refretkn: ", ApiConstants.accessToken);
             }
 
             @Override

@@ -4,6 +4,8 @@ package com.example.geniusplaza.vocabularyset.Retrofit;
  * Created by geniusplaza on 6/13/17.
  */
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -23,7 +25,8 @@ public class RestClient {
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-            httpClient.addInterceptor(logging);
+            httpClient.addInterceptor(logging)
+            .readTimeout(30, TimeUnit.SECONDS);
             retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
                     .client(httpClient.build())

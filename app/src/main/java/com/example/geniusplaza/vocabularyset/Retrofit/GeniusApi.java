@@ -4,6 +4,8 @@ package com.example.geniusplaza.vocabularyset.Retrofit;
  * Created by geniusplaza on 6/13/17.
  */
 
+import com.example.geniusplaza.vocabularyset.POJO.AddWordBody;
+import com.example.geniusplaza.vocabularyset.POJO.AddWordResponse;
 import com.example.geniusplaza.vocabularyset.POJO.AuthToken;
 import com.example.geniusplaza.vocabularyset.POJO.CreateResource;
 import com.example.geniusplaza.vocabularyset.POJO.ResourceRequest;
@@ -31,9 +33,9 @@ public interface GeniusApi {
     @POST("o/token/")
     Observable<AuthToken> postCredentials(@Header("Authorization") String authorization, @Query("username") String username, @Query("password") String password, @Field("grant_type") String grantType);
 
-    @FormUrlEncoded
+    /*@FormUrlEncoded*/
     @POST("o/token/")
-    Observable<AuthToken> postRefreshToken(@Header("Authorization") String authorization, @Query("refresh_token") String refreshToken, @Field("grant_type") String grantType);
+    Observable<AuthToken> postRefreshToken(@Header("Authorization") String authorization, @Query("refresh_token") String refreshToken, @Query("grant_type") String grantType);
 
     @POST("api/get_resources/")
     Observable<Resources> postGetResources(@Header("Authorization") String authorization, @Body ResourceRequest resourceRequest);
@@ -45,7 +47,6 @@ public interface GeniusApi {
     @GET("api/get_resource/{id}")
     Observable<WordsResource> flashcardCreate(@Header("Authorization") String authorization, @Path("id")String id );
 
-    @FormUrlEncoded
     @POST("api/create_word/{id}/")
-    Observable<WordsResource> addVocabWords(@Header("Authorization") String authorization, @Query("order") String order, @Query("name") String name, @Query("meaning") String meaning, @Query("sentence") String sentence, @Query("type_id") String type_id, @Path("id")String id );
+    Observable<AddWordResponse> addVocabWords(@Header("Authorization") String authorization, @Path("id")String id , @Body AddWordBody addWordBody);
 }

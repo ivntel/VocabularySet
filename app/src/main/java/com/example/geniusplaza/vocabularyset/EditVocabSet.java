@@ -19,6 +19,8 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.geniusplaza.vocabularyset.POJO.AddWordBody;
+import com.example.geniusplaza.vocabularyset.POJO.AddWordResponse;
 import com.example.geniusplaza.vocabularyset.POJO.CreateResource;
 import com.example.geniusplaza.vocabularyset.POJO.ResourceRequest;
 import com.example.geniusplaza.vocabularyset.POJO.WordsResource;
@@ -84,7 +86,8 @@ public class EditVocabSet extends AppCompatActivity {
             recyclerView.setVisibility(View.VISIBLE);
             Log.d("Edit0 Clicked", "Recycler view");
             Log.d("value of resource id", resourceId);
-            MainActivity.getRefreshToken(ApiConstants.refreshToken);
+            //MainActivity.getRefreshToken(ApiConstants.refreshToken);
+            Log.d("Accesstoken frm edit: ", ApiConstants.accessToken);
             RestClient.getExampleApi().flashcardCreate("Bearer " + ApiConstants.accessToken,resourceId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<WordsResource>() {
                 @Override
                 public void onSubscribe(Disposable d) {
@@ -123,7 +126,7 @@ public class EditVocabSet extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Please input the needed information", Toast.LENGTH_SHORT).show();
         }
         else {
-            MainActivity.getRefreshToken(ApiConstants.refreshToken);
+            //MainActivity.getRefreshToken(ApiConstants.refreshToken);
             RestClient.getExampleApi().createVocabSet("Bearer " + ApiConstants.accessToken, title.getText().toString(), description.getText().toString(), "1", "4").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<CreateResource>() {
                 @Override
                 public void onSubscribe(Disposable d) {
@@ -180,15 +183,17 @@ public class EditVocabSet extends AppCompatActivity {
         dialogBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 //do something with edt.getText().toString();
-                MainActivity.getRefreshToken(ApiConstants.refreshToken);
-                RestClient.getExampleApi().addVocabWords("Bearer " + ApiConstants.accessToken, wordOrder.getText().toString(),wordName.getText().toString(),wordMeaning.getText().toString(), wordSentence.getText().toString(),"1",resourceId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<WordsResource>() {
+                Log.d("Accesstoken 3: ", ApiConstants.accessToken);
+                //MainActivity.getRefreshToken(ApiConstants.refreshToken);
+                AddWordBody addWordBody = new AddWordBody(wordOrder.getText().toString(),wordName.getText().toString(),wordMeaning.getText().toString(), wordSentence.getText().toString(),"1");
+                RestClient.getExampleApi().addVocabWords("Bearer " + ApiConstants.accessToken ,resourceId, addWordBody).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<AddWordResponse>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(WordsResource value) {
+                    public void onNext(AddWordResponse value) {
                         Toast.makeText(getApplicationContext(),"Successfully saved", Toast.LENGTH_SHORT).show();
                     }
 
