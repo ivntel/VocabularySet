@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.geniusplaza.vocabularyset.POJO.AddWordBody;
 import com.example.geniusplaza.vocabularyset.POJO.AddWordResponse;
 import com.example.geniusplaza.vocabularyset.POJO.CreateResource;
+import com.example.geniusplaza.vocabularyset.POJO.CreateVocabSetBody;
 import com.example.geniusplaza.vocabularyset.POJO.ResourceRequest;
 import com.example.geniusplaza.vocabularyset.POJO.WordsResource;
 import com.example.geniusplaza.vocabularyset.Retrofit.RestClient;
@@ -127,7 +128,8 @@ public class EditVocabSet extends AppCompatActivity {
         }
         else {
             //MainActivity.getRefreshToken(ApiConstants.refreshToken);
-            RestClient.getExampleApi().createVocabSet("Bearer " + ApiConstants.accessToken, title.getText().toString(), description.getText().toString(), "1", "4").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<CreateResource>() {
+            CreateVocabSetBody createVocabSetBody = new CreateVocabSetBody(title.getText().toString(), description.getText().toString(), "1", "4");
+            RestClient.getExampleApi().createVocabSet("Bearer " + ApiConstants.accessToken, createVocabSetBody).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<CreateResource>() {
                 @Override
                 public void onSubscribe(Disposable d) {
 
@@ -136,6 +138,7 @@ public class EditVocabSet extends AppCompatActivity {
                 @Override
                 public void onNext(CreateResource value) {
                     Log.d("Successful response", "in add vocab set");
+                    Log.d("zzzzzzz", value.getError());
                     Toast.makeText(getApplicationContext(), "Save successful", Toast.LENGTH_SHORT).show();
                 }
 

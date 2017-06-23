@@ -8,6 +8,7 @@ import com.example.geniusplaza.vocabularyset.POJO.AddWordBody;
 import com.example.geniusplaza.vocabularyset.POJO.AddWordResponse;
 import com.example.geniusplaza.vocabularyset.POJO.AuthToken;
 import com.example.geniusplaza.vocabularyset.POJO.CreateResource;
+import com.example.geniusplaza.vocabularyset.POJO.CreateVocabSetBody;
 import com.example.geniusplaza.vocabularyset.POJO.ResourceRequest;
 import com.example.geniusplaza.vocabularyset.POJO.Resources;
 import com.example.geniusplaza.vocabularyset.POJO.WordsResource;
@@ -40,9 +41,8 @@ public interface GeniusApi {
     @POST("api/get_resources/")
     Observable<Resources> postGetResources(@Header("Authorization") String authorization, @Body ResourceRequest resourceRequest);
 
-    @FormUrlEncoded
     @POST("api/create_resource/")
-    Observable<CreateResource> createVocabSet(@Header("Authorization") String authorization, @Query("title") String title, @Query("description") String description, @Query("language_id") String lid, @Field("type_id") String type);
+    Observable<CreateResource> createVocabSet(@Header("Authorization") String authorization, @Body CreateVocabSetBody createVocabSetBody);
 
     @GET("api/get_resource/{id}")
     Observable<WordsResource> flashcardCreate(@Header("Authorization") String authorization, @Path("id")String id );
