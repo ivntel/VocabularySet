@@ -1,17 +1,24 @@
 package com.example.geniusplaza.vocabularyset.Utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.geniusplaza.vocabularyset.ApiConstants;
+import com.example.geniusplaza.vocabularyset.EditVocabSet;
 import com.example.geniusplaza.vocabularyset.POJO.Word;
 import com.example.geniusplaza.vocabularyset.POJO.WordsResource;
 import com.example.geniusplaza.vocabularyset.R;
+import com.example.geniusplaza.vocabularyset.Retrofit.RestClient;
+import com.example.geniusplaza.vocabularyset.VocabDashboard;
+import com.example.geniusplaza.vocabularyset.WordsDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +74,7 @@ public class AddWordAdapter extends RecyclerView.Adapter<AddWordAdapter.ViewHold
             holder.wordMeaning.setText(vocabularySetContent.getMeaning());
             holder.wordSentence.setText(vocabularySetContent.getSentence());
             holder.wordOrder.setText(String.valueOf(vocabularySetContent.getOrder()));
+
         }
         else{
             holder.wordName.setText("Enter the word");
@@ -92,6 +100,7 @@ public class AddWordAdapter extends RecyclerView.Adapter<AddWordAdapter.ViewHold
             wordSentence = (EditText) v.findViewById(R.id.textViewAddSentence);
             wordOrder =(EditText) v.findViewById(R.id.textViewOrder);
             wordType = (Spinner) v.findViewById(R.id.spinnerWordType);
+
             List<String> lang = new ArrayList<String>();
             String[] langItems = new String []{"Noun", "Verb", "Adjective", "Adverb", "Conjuction", "Abbreviation", "Exclamation", "Preposition", "Pronoun", "Article", "Determiner"};
             ArrayAdapter<String> myadapter = new ArrayAdapter<String>(v.getContext(), android.R.layout.simple_spinner_item, langItems);
@@ -99,4 +108,5 @@ public class AddWordAdapter extends RecyclerView.Adapter<AddWordAdapter.ViewHold
             wordType.setAdapter(myadapter);
         }
     }
+
 }

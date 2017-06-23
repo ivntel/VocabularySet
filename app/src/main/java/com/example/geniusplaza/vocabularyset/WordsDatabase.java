@@ -40,4 +40,5 @@ public class WordsDatabase extends AppCompatActivity {
 
         //wordImage.setImageBitmap(DBBitmapUtility.getImage((byte[]) wordList.get(0).get("image_data")));
     }
+
 }

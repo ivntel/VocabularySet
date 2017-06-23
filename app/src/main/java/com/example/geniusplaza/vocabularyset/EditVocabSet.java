@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.geniusplaza.vocabularyset.GoogleCloudVision.sample.DB.DBRecyclerViewAdapter;
 import com.example.geniusplaza.vocabularyset.POJO.AddWordBody;
 import com.example.geniusplaza.vocabularyset.POJO.AddWordResponse;
 import com.example.geniusplaza.vocabularyset.POJO.CreateResource;
@@ -140,6 +141,10 @@ public class EditVocabSet extends AppCompatActivity {
                     Log.d("Successful response", "in add vocab set");
                     Log.d("zzzzzzz", value.getError());
                     Toast.makeText(getApplicationContext(), "Save successful", Toast.LENGTH_SHORT).show();
+                    if(DBRecyclerViewAdapter.createVocabSetCheck == 0){
+                        ApiConstants.databaseResId = value.getResourceId().toString();
+                        DBRecyclerViewAdapter.createVocabSetCheck = 1;
+                    }
                 }
 
                 @Override
