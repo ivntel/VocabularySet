@@ -162,11 +162,6 @@ public class VocabDashboard extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void editVocabSetClicked(View v){
-        Intent i = new Intent(this, EditVocabSet.class);
-        i.putExtra("check", 1);
-        startActivity(i);
-    }
 
     public void cameraButtonClicked (View v){
         Intent i = new Intent(this, ChooseActivity.class);

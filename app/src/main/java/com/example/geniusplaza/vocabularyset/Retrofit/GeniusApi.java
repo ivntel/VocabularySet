@@ -9,6 +9,8 @@ import com.example.geniusplaza.vocabularyset.POJO.AddWordResponse;
 import com.example.geniusplaza.vocabularyset.POJO.AuthToken;
 import com.example.geniusplaza.vocabularyset.POJO.CreateResource;
 import com.example.geniusplaza.vocabularyset.POJO.CreateVocabSetBody;
+import com.example.geniusplaza.vocabularyset.POJO.EditWordBody;
+import com.example.geniusplaza.vocabularyset.POJO.EditWordResponse;
 import com.example.geniusplaza.vocabularyset.POJO.ResourceRequest;
 import com.example.geniusplaza.vocabularyset.POJO.Resources;
 import com.example.geniusplaza.vocabularyset.POJO.WordsResource;
@@ -52,4 +54,10 @@ public interface GeniusApi {
 
     @POST("api/delete_resource/{id}/")
     Observable<AddWordResponse> deleteVocabSet(@Header("Authorization") String authorization, @Path("id")String id);
+
+    @POST("api/edit_word/{id}/")
+    Observable<EditWordResponse> editVocabWord(@Header("Authorization") String authorization, @Path("id")String id, @Body EditWordBody editWordBody);
+
+    @POST("api/delete_word/{id}/")
+    Observable<AddWordResponse> deleteVocabWord(@Header("Authorization") String authorization, @Path("id")String id);
 }

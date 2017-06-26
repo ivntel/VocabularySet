@@ -89,6 +89,7 @@ public class VocabDashGridviewAdapter extends BaseAdapter {
             holder.vocabLayout = (ConstraintLayout)view.findViewById(R.id.vocabDashLayout);
             holder.takeTest = (Button)view.findViewById(R.id.vocabDashTakeTestButton);
             holder.delete = (FloatingActionButton) view.findViewById(R.id.vocabDashDeleteFB);
+            holder.edit = (FloatingActionButton)view.findViewById(R.id.vocabDashEditFB);
             EditVocabSet.resourceId = mResources.get(position).getId().toString();
             view.setTag(holder);
         }
@@ -107,6 +108,15 @@ public class VocabDashGridviewAdapter extends BaseAdapter {
         if(resourceNew.getIcon() != "") {
             Glide.with(mContext).load(resourceNew.getIcon()).into(holder.userIconImageView);
         }
+        holder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditVocabSet.resourceId = mResources.get(position).getId().toString();
+                Intent i = new Intent(((VocabDashboard) mContext).getApplicationContext(), EditVocabSet.class);
+                i.putExtra("check", 1);
+                mContext.startActivity(i);
+            }
+        });
         //Glide.with(mContext).load(resourceNew.getResourceImage()).into(holder.vocabSetImageView);
         //Glide.with(mContext).load(resourceNew.getIcon()).into(holder.userIconImageView);
         holder.takeTest.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +133,7 @@ public class VocabDashGridviewAdapter extends BaseAdapter {
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
 
                 ShowActivity.resId = mResources.get(position).getId().toString();
                 RestClient.getExampleApi().deleteVocabSet("Bearer " + ApiConstants.accessToken, mResources.get(position).getId().toString()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<AddWordResponse>() {
@@ -163,7 +174,7 @@ public class VocabDashGridviewAdapter extends BaseAdapter {
         TextView userTextView, descriptionTextView, titleTextView;
         ImageView vocabSetImageView, userIconImageView;
         Button takeTest;
-        FloatingActionButton delete;
+        FloatingActionButton delete, edit;
 
     }
 }

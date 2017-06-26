@@ -50,6 +50,7 @@ public class EditVocabSet extends AppCompatActivity {
     public static String resourceId = null;
     AddWordAdapter mAdapter;
     ProgressBar mProgressBar;
+    public Bundle extras;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +79,7 @@ public class EditVocabSet extends AppCompatActivity {
             }
 
 
-        Bundle extras = getIntent().getExtras();
+        extras = getIntent().getExtras();
         Log.d("Check intent value", (String.valueOf(extras.getInt("check")) ));
         if (extras.getInt("check") == 0 ){
             recyclerView.setVisibility(View.GONE);
@@ -100,6 +101,8 @@ public class EditVocabSet extends AppCompatActivity {
                 public void onNext(WordsResource value) {
                     //AddWordAdapter addWordAdapter = new AddWordAdapter(getApplicationContext(),value.getWords());
                     Log.d("abcc", value.toString());
+                    title.setText(value.getTitle());
+                    description.setText(value.getDescription());
                     vocabularySetRecyclerView = (RecyclerView) findViewById(R.id.recyclerViewEditVS);
                     vocabularySetRecyclerView.setHasFixedSize(false);
                     mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
@@ -124,47 +127,53 @@ public class EditVocabSet extends AppCompatActivity {
     }
 
     public void saveButtonClicked(View v){
-        if(title.getText().toString() == null || description.getText().toString() == null ){
-            Toast.makeText(getApplicationContext(), "Please input the needed information", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            //MainActivity.getRefreshToken(ApiConstants.refreshToken);
-            CreateVocabSetBody createVocabSetBody = new CreateVocabSetBody(title.getText().toString(), description.getText().toString(), "1", "4");
-            RestClient.getExampleApi().createVocabSet("Bearer " + ApiConstants.accessToken, createVocabSetBody).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<CreateResource>() {
-                @Override
-                public void onSubscribe(Disposable d) {
+        if (extras.getInt("check") == 0 ){
+            if(title.getText().toString() == null || description.getText().toString() == null ){
+                Toast.makeText(getApplicationContext(), "Please input the needed information", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                //MainActivity.getRefreshToken(ApiConstants.refreshToken);
+                CreateVocabSetBody createVocabSetBody = new CreateVocabSetBody(title.getText().toString(), description.getText().toString(), "1", "4");
+                RestClient.getExampleApi().createVocabSet("Bearer " + ApiConstants.accessToken, createVocabSetBody).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<CreateResource>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-                }
+                    }
 
-                @Override
-                public void onNext(CreateResource value) {
-                    Log.d("Successful response", "in add vocab set");
-                    Log.d("zzzzzzz", value.getError());
-                    Toast.makeText(getApplicationContext(), "Save successful", Toast.LENGTH_SHORT).show();
-                    if(DBRecyclerViewAdapter.createVocabSetCheck == 0){
-                        ApiConstants.databaseResId = value.getResourceId().toString();
+                    @Override
+                    public void onNext(CreateResource value) {
+                        Log.d("Successful response", "in add vocab set");
+                        Log.d("zzzzzzz", value.getError());
+                        Toast.makeText(getApplicationContext(), "Save successful", Toast.LENGTH_SHORT).show();
+                        if(DBRecyclerViewAdapter.createVocabSetCheck == 0){
+                            ApiConstants.databaseResId = value.getResourceId().toString();
 
-                        DBRecyclerViewAdapter.createVocabSetCheck = 1;
-                        Intent i = new Intent(getApplicationContext(), WordsDatabase.class);
+                            DBRecyclerViewAdapter.createVocabSetCheck = 1;
+                            Intent i = new Intent(getApplicationContext(), WordsDatabase.class);
+                            startActivity(i);
+                        }
+                        Intent i = new Intent(getApplicationContext(), VocabDashboard.class);
                         startActivity(i);
                     }
-                    Intent i = new Intent(getApplicationContext(), VocabDashboard.class);
-                    startActivity(i);
-                }
 
-                @Override
-                public void onError(Throwable e) {
+                    @Override
+                    public void onError(Throwable e) {
 
-                }
+                    }
 
-                @Override
-                public void onComplete() {
+                    @Override
+                    public void onComplete() {
 
-                }
-            });
-            Intent i = new Intent(this, VocabDashboard.class);
-            startActivity(i);
+                    }
+                });
+                Intent i = new Intent(this, VocabDashboard.class);
+                startActivity(i);
+            }
         }
+        else {
+
+        }
+
     }
 
     public void cancelButtonClicked(View v){
