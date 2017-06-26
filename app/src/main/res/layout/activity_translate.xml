@@ -32,6 +32,17 @@
         android:id="@+id/textViewEnglish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="20dp"/>
+        android:text="ENGLISH WORD"
+        android:textSize="20dp"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Spanish Pronunciation"
+        android:id="@+id/buttonSpanish"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="English Pronunciation"
+        android:id="@+id/buttonEnglish"/>
 </LinearLayout>

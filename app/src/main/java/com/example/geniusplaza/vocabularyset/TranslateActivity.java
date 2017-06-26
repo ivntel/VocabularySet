@@ -2,9 +2,11 @@ package com.example.geniusplaza.vocabularyset;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +27,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.util.Locale;
 
 /**
  * Created by geniusplaza on 6/19/17.
@@ -34,8 +37,9 @@ public class TranslateActivity extends AppCompatActivity {
 
     String englishWord;
     TextView textViewSpanish, textViewEnglish;
+    TextToSpeech t1,t2;
     public String spanishTranslation;
-
+    Button bSpanish, bEnglish;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +49,8 @@ public class TranslateActivity extends AppCompatActivity {
 
         textViewSpanish = (TextView) findViewById(R.id.textViewSpanish);
         textViewEnglish = (TextView) findViewById(R.id.textViewEnglish);
+        bSpanish = (Button)findViewById(R.id.buttonSpanish);
+        bEnglish = (Button)findViewById(R.id.buttonEnglish);
         textViewEnglish.setText(englishWord);
 
         if (englishWord != null) {
@@ -53,7 +59,41 @@ public class TranslateActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
 
             new SaveTheFeed().execute();
+            t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+                @Override
+                public void onInit(int status) {
+                    if(status != TextToSpeech.ERROR) {
+                        t1.setLanguage(Locale.UK);
 
+                    }
+                }
+            });
+            t2=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+                @Override
+                public void onInit(int status) {
+                    if(status != TextToSpeech.ERROR) {
+                        //t1.setLanguage(Locale.UK);
+                        Locale locSpanish = new Locale("spa","MEX");
+                        t2.setLanguage(locSpanish);
+                    }
+                }
+            });
+            bSpanish.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String toSpeak = textViewSpanish.getText().toString();
+                    Toast.makeText(getApplicationContext(), toSpeak,Toast.LENGTH_SHORT).show();
+                    t2.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+                }
+            });
+            bEnglish.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String toSpeak = textViewEnglish.getText().toString();
+                    Toast.makeText(getApplicationContext(), toSpeak,Toast.LENGTH_SHORT).show();
+                    t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+                }
+            });
         } else {
 
             Toast.makeText(this, "Enter Words to Translate",
