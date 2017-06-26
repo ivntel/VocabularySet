@@ -4,11 +4,14 @@ package com.example.geniusplaza.vocabularyset.Retrofit;
  * Created by geniusplaza on 6/13/17.
  */
 
+import com.example.geniusplaza.vocabularyset.EditVocabSet;
 import com.example.geniusplaza.vocabularyset.POJO.AddWordBody;
 import com.example.geniusplaza.vocabularyset.POJO.AddWordResponse;
 import com.example.geniusplaza.vocabularyset.POJO.AuthToken;
 import com.example.geniusplaza.vocabularyset.POJO.CreateResource;
 import com.example.geniusplaza.vocabularyset.POJO.CreateVocabSetBody;
+import com.example.geniusplaza.vocabularyset.POJO.EditVocabSetBody;
+import com.example.geniusplaza.vocabularyset.POJO.EditVocabSetResponse;
 import com.example.geniusplaza.vocabularyset.POJO.EditWordBody;
 import com.example.geniusplaza.vocabularyset.POJO.EditWordResponse;
 import com.example.geniusplaza.vocabularyset.POJO.ResourceRequest;
@@ -60,4 +63,7 @@ public interface GeniusApi {
 
     @POST("api/delete_word/{id}/")
     Observable<AddWordResponse> deleteVocabWord(@Header("Authorization") String authorization, @Path("id")String id);
+
+    @POST("api/edit_resource/{id}/")
+    Observable<EditVocabSetResponse> editVocabSet(@Header("Authorization") String authorization, @Path("id")String id, @Body EditVocabSetBody editVocabSetBody);
 }

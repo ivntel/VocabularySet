@@ -3,37 +3,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textViewAddWord"
-        android:hint="Enter Word"/>
+        android:hint="Enter Word"
+        android:gravity="center_horizontal"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <EditText
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textViewOrder"
             android:inputType="none"
+            android:focusable="true"
+            android:clickable="true"
+
             android:hint="#"
             />
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/spinnerWordType"/>
+            android:id="@+id/spinnerWordType"
+            android:layout_marginLeft="40dp"/>
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/vocabEditVocabWord"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:layout_marginLeft="20dp"
             android:clickable="true"
             app:fabSize="mini"
-            app:srcCompat="@drawable/ic_edit"
+            app:srcCompat="@drawable/ic_save"
+            android:visibility="invisible"
              />
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/vocabDeleteVocabWord"
             android:layout_width="wrap_content"
@@ -41,7 +48,9 @@
             android:clickable="true"
             app:fabSize="mini"
             app:srcCompat="@drawable/ic_delete"
-             />
+            android:layout_marginLeft="20dp"
+            android:visibility="invisible"
+            />
 
     </LinearLayout>
     <EditText
@@ -54,5 +63,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/textViewAddSentence"
         android:hint="Enter Sentence"/>
-
+    <View
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/colorPrimaryDark"/>
 </LinearLayout>

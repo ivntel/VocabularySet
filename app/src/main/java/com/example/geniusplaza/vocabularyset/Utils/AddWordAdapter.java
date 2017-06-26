@@ -93,6 +93,10 @@ public class AddWordAdapter extends RecyclerView.Adapter<AddWordAdapter.ViewHold
             holder.wordMeaning.setText(vocabularySetContent.getMeaning());
             holder.wordSentence.setText(vocabularySetContent.getSentence());
             holder.wordOrder.setText(String.valueOf(vocabularySetContent.getOrder()));
+            holder.wordOrder.setClickable(false);
+            holder.wordOrder.setFocusable(false);
+            holder.editWord.setVisibility(View.VISIBLE);
+            holder.deleteWord.setVisibility(View.VISIBLE);
             holder.deleteWord.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
@@ -112,7 +116,7 @@ public class AddWordAdapter extends RecyclerView.Adapter<AddWordAdapter.ViewHold
 
                         @Override
                         public void onError(Throwable e) {
-
+                            Toast.makeText(v.getContext(),"Not permitted",Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -146,7 +150,7 @@ public class AddWordAdapter extends RecyclerView.Adapter<AddWordAdapter.ViewHold
 
                         @Override
                         public void onError(Throwable e) {
-                            //Toast.makeText(((EditVocabSet) mContext).getApplicationContext(), "Word Not Successfully Edited!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(v.getContext(), "Not permitted", Toast.LENGTH_SHORT).show();
 
                         }
 

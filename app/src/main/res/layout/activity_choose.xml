@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:text="CHOOSE WHAT YOU ARE TAKING A PICTURE OF:"
         android:layout_gravity="center"
+        android:gravity="center_horizontal"
         android:textSize="25dp"/>
 
     <Button

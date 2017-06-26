@@ -2,8 +2,6 @@ package com.example.geniusplaza.vocabularyset;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,7 +22,8 @@ import com.example.geniusplaza.vocabularyset.POJO.AddWordBody;
 import com.example.geniusplaza.vocabularyset.POJO.AddWordResponse;
 import com.example.geniusplaza.vocabularyset.POJO.CreateResource;
 import com.example.geniusplaza.vocabularyset.POJO.CreateVocabSetBody;
-import com.example.geniusplaza.vocabularyset.POJO.ResourceRequest;
+import com.example.geniusplaza.vocabularyset.POJO.EditVocabSetBody;
+import com.example.geniusplaza.vocabularyset.POJO.EditVocabSetResponse;
 import com.example.geniusplaza.vocabularyset.POJO.WordsResource;
 import com.example.geniusplaza.vocabularyset.Retrofit.RestClient;
 import com.example.geniusplaza.vocabularyset.Utils.AddWordAdapter;
@@ -35,9 +34,6 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class EditVocabSet extends AppCompatActivity {
 
@@ -171,7 +167,31 @@ public class EditVocabSet extends AppCompatActivity {
             }
         }
         else {
+            EditVocabSetBody editVocabSetBody = new EditVocabSetBody(title.getText().toString(), description.getText().toString(), "1");
+            RestClient.getExampleApi().editVocabSet("Bearer " + ApiConstants.accessToken, resourceId,editVocabSetBody)
+                    .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<EditVocabSetResponse>() {
+                @Override
+                public void onSubscribe(Disposable d) {
 
+                }
+
+                @Override
+                public void onNext(EditVocabSetResponse value) {
+                    Toast.makeText(getApplicationContext(), "Edit Success!", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(EditVocabSet.this,VocabDashboard.class);
+                    startActivity(i);
+                }
+
+                @Override
+                public void onError(Throwable e) {
+
+                }
+
+                @Override
+                public void onComplete() {
+
+                }
+            });
         }
 
     }
@@ -221,7 +241,7 @@ public class EditVocabSet extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Toast.makeText(getApplicationContext(),"Enter a valid Order Num", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
