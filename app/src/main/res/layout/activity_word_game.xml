@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.geniusplaza.vocabularyset.WordGame">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="370dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="5dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Find a Picture of this word:"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"/>
+
+        <TextView
+            android:id="@+id/textViewWordGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="80dp"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButtonCameraGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:fabSize="mini"
+            app:srcCompat="@android:drawable/ic_menu_camera"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="120dp"
+            android:onClick="gameCameraButtonClicked"/>
+
+        <ImageView
+            android:id="@+id/imageViewGame"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:srcCompat="@mipmap/ic_launcher"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="55dp"
+            android:layout_marginLeft="60dp"/>
+        <TextView
+            android:id="@+id/textViewResultGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Result"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="55dp"
+            android:layout_marginLeft="220dp"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButtonNextGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:fabSize="mini"
+            app:srcCompat="@android:drawable/ic_media_next"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:onClick="nextVocabWordGame"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButtonPreviousGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:fabSize="mini"
+            app:srcCompat="@android:drawable/ic_media_previous"
+            android:layout_gravity="bottom|start"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:onClick="previousVocabWordGame"/>
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Out Of"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="30dp"/>
+
+        <TextView
+            android:id="@+id/textViewStartLimitGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="100dp"/>
+
+        <TextView
+            android:id="@+id/textViewEndLimitGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="30dp"
+            android:layout_marginRight="100dp"/>
+        <ProgressBar
+            android:id="@+id/progress_bar_wordGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:indeterminateTint="#000000"/>
+
+
+    </android.support.v7.widget.CardView>
+</android.support.constraint.ConstraintLayout>

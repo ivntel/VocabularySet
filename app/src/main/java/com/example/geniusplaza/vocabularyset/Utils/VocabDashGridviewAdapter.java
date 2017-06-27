@@ -26,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.example.geniusplaza.vocabularyset.Retrofit.RestClient;
 import com.example.geniusplaza.vocabularyset.ShowActivity;
 import com.example.geniusplaza.vocabularyset.VocabDashboard;
+import com.example.geniusplaza.vocabularyset.WordGame;
 
 import java.util.List;
 
@@ -90,6 +91,7 @@ public class VocabDashGridviewAdapter extends BaseAdapter {
             holder.takeTest = (Button)view.findViewById(R.id.vocabDashTakeTestButton);
             holder.delete = (FloatingActionButton) view.findViewById(R.id.vocabDashDeleteFB);
             holder.edit = (FloatingActionButton)view.findViewById(R.id.vocabDashEditFB);
+            holder.goToGame = (Button)view.findViewById(R.id.buttonWordGame);
             EditVocabSet.resourceId = mResources.get(position).getId().toString();
             view.setTag(holder);
         }
@@ -127,6 +129,15 @@ public class VocabDashGridviewAdapter extends BaseAdapter {
                 ShowActivity.resId = mResources.get(position).getId().toString();
 
                 Intent i = new Intent(((VocabDashboard) mContext).getApplicationContext(), ShowActivity.class);
+                mContext.startActivity(i);
+            }
+        });
+        holder.goToGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WordGame.resId = mResources.get(position).getId().toString();
+
+                Intent i = new Intent(((VocabDashboard) mContext).getApplicationContext(), WordGame.class);
                 mContext.startActivity(i);
             }
         });
@@ -173,7 +184,7 @@ public class VocabDashGridviewAdapter extends BaseAdapter {
         ConstraintLayout vocabLayout;
         TextView userTextView, descriptionTextView, titleTextView;
         ImageView vocabSetImageView, userIconImageView;
-        Button takeTest;
+        Button takeTest, goToGame;
         FloatingActionButton delete, edit;
 
     }
