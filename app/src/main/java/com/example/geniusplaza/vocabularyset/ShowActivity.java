@@ -12,6 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -117,7 +120,18 @@ public class ShowActivity extends AppCompatActivity {
 
 
     }
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem home){
+        Intent i = new Intent(ShowActivity.this, VocabDashboard.class);
+        startActivity(i);
+        return super.onOptionsItemSelected(home);
+    }
     public void cardViewClicked(View v) {
         //Animations handled here
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.swing_up_right);
@@ -236,6 +250,8 @@ public class ShowActivity extends AppCompatActivity {
 
                     if (word.getText().toString().equalsIgnoreCase(result.get(0))) {
                         resultTextView.setText("CORRECT");
+                        hearWordButton.setVisibility(View.INVISIBLE);
+                        hearWordText.setVisibility(View.INVISIBLE);
                     } else {
                         resultTextView.setText("INCORRECT");
                         hearWordText.setVisibility(View.VISIBLE);

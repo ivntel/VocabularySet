@@ -9,6 +9,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -130,7 +133,18 @@ public class EditVocabSet extends AppCompatActivity {
         }
 
     }
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem home){
+        Intent i = new Intent(EditVocabSet.this, VocabDashboard.class);
+        startActivity(i);
+        return super.onOptionsItemSelected(home);
+    }
     public void saveButtonClicked(View v) {
 
         //This one handles saving the new vocab set.
@@ -193,11 +207,13 @@ public class EditVocabSet extends AppCompatActivity {
                 @Override
                 public void onNext(EditVocabSetResponse value) {
                     Toast.makeText(getApplicationContext(), "Edit Success!", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(EditVocabSet.this,VocabDashboard.class);
+                    startActivity(i);
                 }
 
                 @Override
                 public void onError(Throwable e) {
-
+                    Toast.makeText(getApplicationContext(),"Not Permitted", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override

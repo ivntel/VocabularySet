@@ -8,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -93,7 +96,18 @@ public class VocabDashboard extends AppCompatActivity {
             }
         });
     }
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem home){
+        Intent i = new Intent(VocabDashboard.this, VocabDashboard.class);
+        startActivity(i);
+        return super.onOptionsItemSelected(home);
+    }
     public void allVocabSetClicked(View v) {
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         mProgressBar.setVisibility(View.VISIBLE);
@@ -150,7 +164,6 @@ public class VocabDashboard extends AppCompatActivity {
                 temp = value.getResources();
                 resources = value;
                 vocabDashGridviewAdapter.updateData(value);
-                Log.d("TRYY", temp.get(0).getDescription());
                 mProgressBar.setVisibility(View.GONE);
             }
 

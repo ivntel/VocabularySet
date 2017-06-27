@@ -15,6 +15,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -83,6 +86,9 @@ public class WordGame extends AppCompatActivity {
         mMainImage = (ImageView) findViewById(R.id.imageViewGame);
         mProgressBar.setVisibility(View.VISIBLE);
         resultGame = (TextView) findViewById(R.id.textViewResultGame);
+
+        //Api Call to get the words.
+        //Words Associated with vocab set using resId
         RestClient.getExampleApi().flashcardCreate("Bearer " + ApiConstants.accessToken, resId)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<WordsResource>() {
             @Override
@@ -117,7 +123,18 @@ public class WordGame extends AppCompatActivity {
             }
         });
     }
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem home){
+        Intent i = new Intent(WordGame.this, VocabDashboard.class);
+        startActivity(i);
+        return super.onOptionsItemSelected(home);
+    }
     public void nextVocabWordGame(View v) {
         next.setClickable(true);
         prev.setClickable(true);
@@ -150,7 +167,7 @@ public class WordGame extends AppCompatActivity {
             prev.setClickable(false);
         }
     }
-
+    //Google cloud Vision
     public void gameCameraButtonClicked(View v) {
         FloatingActionButton fabCamera = (FloatingActionButton) findViewById(R.id.floatingActionButtonCameraGame);
         fabCamera.setOnClickListener(new View.OnClickListener() {
@@ -347,6 +364,8 @@ public class WordGame extends AppCompatActivity {
             protected void onPostExecute(String result) {
                 mProgressBar.setVisibility(View.GONE);
                 //mImageDetails.setText(result);
+                mMainImage.setVisibility(View.VISIBLE);
+                resultGame.setVisibility(View.VISIBLE);
                 if (textViewWord.getText().toString().equalsIgnoreCase(imageArray.get(0))) {
                     resultGame.setText("CORRECT");
                 } else {

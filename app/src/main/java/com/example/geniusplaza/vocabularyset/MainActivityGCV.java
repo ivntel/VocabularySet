@@ -17,6 +17,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -102,7 +105,18 @@ public class MainActivityGCV extends AppCompatActivity {
         translate = (Button) findViewById(R.id.buttonTranslate);
         dictionaryButton = (Button) findViewById(R.id.buttonDictionary);
     }
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem home){
+        Intent i = new Intent(MainActivityGCV.this, VocabDashboard.class);
+        startActivity(i);
+        return super.onOptionsItemSelected(home);
+    }
     public void startGalleryChooser() {
     //This method grants permission for accessing gallery
         if (PermissionUtils.requestPermission(this, GALLERY_PERMISSIONS_REQUEST, Manifest.permission.READ_EXTERNAL_STORAGE)) {
