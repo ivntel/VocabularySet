@@ -75,7 +75,7 @@ public class DBRecyclerViewAdapter extends RecyclerView.Adapter<DBRecyclerViewAd
     //Replace contents of a view(invoked by the layout manager)
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-
+        //Populates the xml objects
         final HashMap<String,Object> word = mWords.get(position);
         holder.wordName.setText(word.get("word").toString());
         holder.wordMeaning.setText(word.get("meaning").toString());
@@ -85,6 +85,7 @@ public class DBRecyclerViewAdapter extends RecyclerView.Adapter<DBRecyclerViewAd
         holder.addToDatabase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //if case to handle the first time a vocabSet is created from the Database
                 if (ApiConstants.databaseResId == null){
                     Toast.makeText(((WordsDatabase) mContext).getApplicationContext(),"CREATE THE VOCAB SET 1ST", Toast.LENGTH_LONG).show();
                     Intent i = new Intent(((WordsDatabase) mContext).getApplicationContext(), EditVocabSet.class);
@@ -92,6 +93,7 @@ public class DBRecyclerViewAdapter extends RecyclerView.Adapter<DBRecyclerViewAd
                     mContext.startActivity(i);
                 }
                 else{
+                    //if a vocabSet from the Database has been created the word is added through a Post Api call
                     AddWordBody addWordBody = new AddWordBody(String.valueOf(++counter),holder.wordName.getText().toString(),holder.wordMeaning.getText().toString(),holder.wordSentence.getText().toString(),"1");
                     RestClient.getExampleApi().addVocabWords("Bearer "+ ApiConstants.accessToken, ApiConstants.databaseResId, addWordBody).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<AddWordResponse>() {
                         @Override

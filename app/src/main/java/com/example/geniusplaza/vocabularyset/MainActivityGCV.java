@@ -72,7 +72,7 @@ public class MainActivityGCV extends AppCompatActivity {
 //        setSupportActionBar(toolbar);
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar_image_search);
 
-
+        //This button begins the Google Cloud Vision activity, prompts you to choose between camera and gallery
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,8 +104,7 @@ public class MainActivityGCV extends AppCompatActivity {
     }
 
     public void startGalleryChooser() {
-        //rxPermissions = new RxPermissions(this);
-
+    //This method grants permission for accessing gallery
         if (PermissionUtils.requestPermission(this, GALLERY_PERMISSIONS_REQUEST, Manifest.permission.READ_EXTERNAL_STORAGE)) {
             Intent intent = new Intent();
             intent.setType("image*//*");
@@ -116,6 +115,7 @@ public class MainActivityGCV extends AppCompatActivity {
     }
 
     public void startCamera() {
+        //This method grants permission for starting camera
         if (PermissionUtils.requestPermission(
                 this,
                 CAMERA_PERMISSIONS_REQUEST,
@@ -334,11 +334,10 @@ public class MainActivityGCV extends AppCompatActivity {
         spanishString = new ArrayList<String>();
         StringBuilder message = new StringBuilder("Results:\n\n");
         message.append("Object:\n");
-
+        //if cases to handle whether user chose object, text, landmark
         if (ChooseActivity.optSelected.equals("o")) {
             List<EntityAnnotation> labels = response.getResponses().get(0).getLabelAnnotations();
             if (labels != null) {
-                //spanishString.add(response.getResponses().get(0).getLabelAnnotations().get(0).setLocale("es").getDescription());
                 imageArray.add(response.getResponses().get(0).getLabelAnnotations().get(0).getDescription());
                 Log.d("trrrryyy", imageArray.toString());
                 for (EntityAnnotation label : labels) {

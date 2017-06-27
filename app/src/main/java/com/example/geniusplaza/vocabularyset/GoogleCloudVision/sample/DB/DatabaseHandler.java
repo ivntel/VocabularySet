@@ -1,8 +1,5 @@
 package com.example.geniusplaza.vocabularyset.GoogleCloudVision.sample.DB;
 
-/**
- * Created by geniusplaza on 6/23/17.
- */
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -57,7 +54,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     }
 
     public int addWordInfo(String wordName, String wordDefinition, String wordSentence, byte[] imageWord) {
-        /*First check if same latitude, longitude combination already exists*/
+        /*First check if same word already exists*/
         ArrayList<HashMap<String,Object>> wordList = getWordInfo();
 
         for(HashMap<String, Object> wordInfo : wordList){
@@ -111,7 +108,6 @@ public class DatabaseHandler extends SQLiteOpenHelper{
             cursor.close();
             db.close();
         }
-        // return location info
         return wordList;
     }
 

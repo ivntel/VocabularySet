@@ -43,6 +43,7 @@ public class DictionaryActivity extends AppCompatActivity {
         databaseHandler = new DatabaseHandler(this);
         Log.d("Word looking up", MainActivityGCV.imageArray.get(0));
 
+        //Api call to get the defintition of the first word in the imageArray
         RestClient.getExampleApi().wordLookup(MainActivityGCV.imageArray.get(0)).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<WordContent>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -81,6 +82,7 @@ public class DictionaryActivity extends AppCompatActivity {
     }
 
     public void addToDatabaseButtonClicked(View v) {
+        //Button that inputs the contents into the database
         byte[] holderString = DBBitmapUtility.getBytes(MainActivityGCV.bitmap);
         databaseHandler.addWordInfo(MainActivityGCV.imageArray.get(0), meaning.getText().toString(), sentence.getText().toString(), holderString);
         Toast.makeText(getApplicationContext(), "Add to database Successful", Toast.LENGTH_SHORT).show();

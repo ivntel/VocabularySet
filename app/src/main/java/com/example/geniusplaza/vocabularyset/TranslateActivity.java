@@ -73,7 +73,7 @@ public class TranslateActivity extends AppCompatActivity {
                 @Override
                 public void onInit(int status) {
                     if (status != TextToSpeech.ERROR) {
-                        //t1.setLanguage(Locale.UK);
+                        //sets language to Spanish
                         Locale locSpanish = new Locale("spa", "MEX");
                         t2.setLanguage(locSpanish);
                     }
@@ -151,6 +151,7 @@ public class TranslateActivity extends AppCompatActivity {
 
                 JSONObject jObject = new JSONObject(jsonString);
 
+                //chooses the language at the 9th location in the list which is Spanish
                 JSONArray jArray = jObject.getJSONArray("translations");
                 JSONObject translationObject = jArray.getJSONObject(9);
                 Log.d("holllla", translationObject.getString("spanish"));
@@ -178,9 +179,6 @@ public class TranslateActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             textViewSpanish = (TextView) findViewById(R.id.textViewSpanish);
             textViewSpanish.setText(spanishTranslation);
-            // textViewSpanish = (TextView) findViewById(R.id.textViewSpanish);
-//            Log.d("Result value: ", result);
-//            textViewSpanish.setText(result);
 
         }
     }
