@@ -1,7 +1,11 @@
 package com.example.geniusplaza.vocabularyset;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.speech.RecognizerIntent;
+import android.speech.tts.TextToSpeech;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +25,7 @@ import com.example.geniusplaza.vocabularyset.Retrofit.RestClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -31,14 +36,17 @@ import static android.R.attr.animation;
 
 public class ShowActivity extends AppCompatActivity {
 
-    public TextView word, curPos,totalSize, meaning, sentence;
+    public TextView word, curPos,totalSize, meaning, sentence, resultTextView, hearWordText, userSpeech;
     public static String resId = null;
     public List<Word> vocabWords = new ArrayList<Word>();
-    FloatingActionButton next, prev;
+    FloatingActionButton next, prev, hearWordButton;
     public CardView cardViewFlipped, cardView;
     public int flipCurrentCounter;
     public ConstraintLayout constraintLayout, flipBack;
     ProgressBar mProgressBar;
+    FloatingActionButton speakButton;
+    TextToSpeech t1;
+    private final int REQ_CODE_SPEECH_INPUT = 100;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,10 +61,14 @@ public class ShowActivity extends AppCompatActivity {
         totalSize = (TextView)findViewById(R.id.textViewSize);
         next = (FloatingActionButton)findViewById(R.id.floatingActionButtonNextWord);
         prev = (FloatingActionButton)findViewById(R.id.floatingActionButtonPreviousWord);
+        speakButton = (FloatingActionButton)findViewById(R.id.floatingActionButtonSpeak);
+        resultTextView = (TextView)findViewById(R.id.textViewSTTResult);
+        userSpeech = (TextView)findViewById(R.id.textViewUserSpeech);
+        hearWordButton = (FloatingActionButton)findViewById(R.id.floatingActionButtonHearPronounciation);
+        hearWordText = (TextView)findViewById(R.id.textViewHearPronounciation);
         curPos.setText("1");
         mProgressBar.setVisibility(View.VISIBLE);
 
-        //MainActivity.getRefreshToken(ApiConstants.refreshToken);
         RestClient.getExampleApi().flashcardCreate("Bearer " + ApiConstants.accessToken, resId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<WordsResource>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -90,6 +102,15 @@ public class ShowActivity extends AppCompatActivity {
 
             }
         });
+        speakButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                askSpeechInput();
+            }
+        });
+
+
     }
     public void cardViewClicked(View v){
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.swing_up_right);
@@ -118,17 +139,32 @@ public class ShowActivity extends AppCompatActivity {
                 Log.d("Check for text", vocabWords.get(Integer.parseInt(curPos.getText().toString())-1).getName());
                 word = (TextView) findViewById(R.id.textViewWord);
                 curPos = (TextView)findViewById(R.id.textViewCurPos);
+                speakButton = (FloatingActionButton)findViewById(R.id.floatingActionButtonSpeak);
+                resultTextView = (TextView)findViewById(R.id.textViewSTTResult);
+                hearWordButton = (FloatingActionButton)findViewById(R.id.floatingActionButtonHearPronounciation);
+                hearWordText = (TextView)findViewById(R.id.textViewHearPronounciation);
+
+                speakButton.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        askSpeechInput();
+                    }
+                });
 
                 totalSize = (TextView)findViewById(R.id.textViewSize);
                 word.setText(vocabWords.get(flipCurrentCounter).getName());
                 curPos.setText(String.valueOf(flipCurrentCounter+1));
-                totalSize.setText(String.valueOf(vocabWords.size())) ;
+                totalSize.setText(String.valueOf(vocabWords.size()));
             }
         });
     }
     public void nextVocabWord(View v){
         next.setClickable(true);
         prev.setClickable(true);
+        hearWordText.setVisibility(View.GONE);
+        hearWordButton.setVisibility(View.GONE);
+        resultTextView.setText("Result");
         //tempPos = 1
         int tempPos = Integer.parseInt(curPos.getText().toString());
         // tempSize = 12
@@ -146,6 +182,9 @@ public class ShowActivity extends AppCompatActivity {
     public  void previousVocabWord(View v){
         prev.setClickable(true);
         next.setClickable(true);
+        hearWordText.setVisibility(View.GONE);
+        hearWordButton.setVisibility(View.GONE);
+        resultTextView.setText("Result");
         int tempPos = Integer.parseInt(curPos.getText().toString());
         int tempSize = Integer.parseInt(totalSize.getText().toString());
         if (tempPos>1){
@@ -155,6 +194,64 @@ public class ShowActivity extends AppCompatActivity {
         }
         else {
             prev.setClickable(false);
+        }
+    }
+    private void askSpeechInput() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
+                "Hi speak something");
+        try {
+            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+        } catch (ActivityNotFoundException a) {
+
+        }
+    }
+
+    // Receiving speech input
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case REQ_CODE_SPEECH_INPUT: {
+                if (resultCode == RESULT_OK && null != data) {
+
+                    ArrayList<String> result = data
+                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    //voiceInput.setText(result.get(0));
+                    if(word.getText().toString().equalsIgnoreCase(result.get(0))){
+                        resultTextView.setText("CORRECT");
+                    }
+                    else {
+                        resultTextView.setText("INCORRECT");
+                        hearWordText.setVisibility(View.VISIBLE);
+                        hearWordButton.setVisibility(View.VISIBLE);
+                        Toast.makeText(getApplicationContext(), "What you said: " + "\"" + result.get(0) + "\"", Toast.LENGTH_LONG).show();
+
+                        t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+                            @Override
+                            public void onInit(int status) {
+                                if(status != TextToSpeech.ERROR) {
+                                    t1.setLanguage(Locale.UK);
+
+                                }
+                            }
+                        });
+                        hearWordButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String toSpeak = word.getText().toString();
+                                t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+                            }
+                        });
+                    }
+                }
+                break;
+            }
         }
     }
 }
