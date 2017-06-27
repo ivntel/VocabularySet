@@ -46,11 +46,11 @@ public class VocabDashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         resources = new Resources();
         setContentView(R.layout.activity_vocab_dashboard);
-        sEditText = (EditText)findViewById(R.id.searchEditText);
+        sEditText = (EditText) findViewById(R.id.searchEditText);
         vocabDashboardGridview = (GridView) findViewById(R.id.grid_view);
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
-        vocabDashGridviewAdapter = new VocabDashGridviewAdapter(temp,this);
+        vocabDashGridviewAdapter = new VocabDashGridviewAdapter(temp, this);
         vocabDashboardGridview.setAdapter(vocabDashGridviewAdapter);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -90,7 +90,8 @@ public class VocabDashboard extends AppCompatActivity {
             }
         });
     }
-    public void allVocabSetClicked(View v){
+
+    public void allVocabSetClicked(View v) {
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         mProgressBar.setVisibility(View.VISIBLE);
         //MainActivity.getRefreshToken(ApiConstants.refreshToken);
@@ -123,10 +124,11 @@ public class VocabDashboard extends AppCompatActivity {
             }
         });
     }
-    public void searchButtonClicked(View v){
+
+    public void searchButtonClicked(View v) {
         mProgressBar.setVisibility(View.VISIBLE);
         //MainActivity.getRefreshToken(ApiConstants.refreshToken);
-        ResourceRequest resourceRequest = new ResourceRequest("1", "vocabularyset", sEditText.getText().toString(),"False");
+        ResourceRequest resourceRequest = new ResourceRequest("1", "vocabularyset", sEditText.getText().toString(), "False");
         RestClient.getExampleApi().postGetResources("Bearer " + ApiConstants.accessToken, resourceRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<Resources>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -156,14 +158,15 @@ public class VocabDashboard extends AppCompatActivity {
         });
 
     }
-    public void addVocabSetClicked(View v){
+
+    public void addVocabSetClicked(View v) {
         Intent i = new Intent(this, EditVocabSet.class);
         i.putExtra("check", 0);
         startActivity(i);
     }
 
 
-    public void cameraButtonClicked (View v){
+    public void cameraButtonClicked(View v) {
         Intent i = new Intent(this, ChooseActivity.class);
         startActivity(i);
     }

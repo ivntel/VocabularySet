@@ -27,20 +27,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Use the floating action button to select an image."/>
+                android:text="Use the floating action button to select an image." />
 
             <ImageView
                 android:id="@+id/main_image"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:scaleType="fitCenter"/>
+                android:scaleType="fitCenter" />
         </LinearLayout>
     </ScrollView>
+
     <ProgressBar
         android:id="@+id/progress_bar_image_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="gone"
-        android:indeterminateTint="#000000"/>
+        android:indeterminateTint="#000000"
+        android:visibility="gone" />
 </RelativeLayout>

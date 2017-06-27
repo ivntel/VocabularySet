@@ -6,14 +6,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.geniusplaza.vocabularyset.ChooseActivity">
+
     <TextView
         android:id="@+id/textTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CHOOSE WHAT YOU ARE TAKING A PICTURE OF:"
         android:layout_gravity="center"
         android:gravity="center_horizontal"
-        android:textSize="25dp"/>
+        android:text="CHOOSE WHAT YOU ARE TAKING A PICTURE OF:"
+        android:textSize="25dp" />
 
     <Button
         android:id="@+id/buttonObject"
@@ -27,24 +28,25 @@
         android:id="@+id/buttonText"
         android:layout_width="94dp"
         android:layout_height="45dp"
-        android:text="Text"
         android:layout_gravity="center"
-        android:onClick="textButtonClicked"/>
+        android:onClick="textButtonClicked"
+        android:text="Text" />
 
     <Button
         android:id="@+id/buttonLandmark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Landmark"
         android:layout_gravity="center"
-        android:onClick="landmarkButtonClicked"/>
+        android:onClick="landmarkButtonClicked"
+        android:text="Landmark" />
+
     <Button
         android:id="@+id/buttonGoToWordsDB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
+        android:onClick="goToWordsDBbutton"
         android:text="Go To My Words"
         app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="bottom|center_horizontal"
-        android:onClick="goToWordsDBbutton"/>
+        app:layout_anchorGravity="bottom|center_horizontal" />
 </LinearLayout>

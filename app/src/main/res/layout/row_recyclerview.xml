@@ -2,71 +2,76 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <EditText
+        android:id="@+id/textViewAddWord"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewAddWord"
-        android:hint="Enter Word"
-        android:gravity="center_horizontal"/>
+        android:gravity="center_horizontal"
+        android:hint="Enter Word" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewOrder"
-            android:inputType="none"
-            android:focusable="true"
-            android:clickable="true"
 
-            android:hint="#"
-            />
-        <Spinner
+        <EditText
+            android:id="@+id/textViewOrder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:hint="#"
+
+            android:inputType="none" />
+
+        <Spinner
             android:id="@+id/spinnerWordType"
-            android:layout_marginLeft="40dp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp" />
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/vocabEditVocabWord"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:clickable="true"
-            app:fabSize="mini"
-            app:srcCompat="@drawable/ic_save"
             android:visibility="invisible"
-             />
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_save" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/vocabDeleteVocabWord"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            app:fabSize="mini"
-            app:srcCompat="@drawable/ic_delete"
             android:layout_marginLeft="20dp"
+            android:clickable="true"
             android:visibility="invisible"
-            />
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_delete" />
 
     </LinearLayout>
+
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/textViewAddMeaning"
-        android:hint="Enter Meaning"/>
-    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="Enter Meaning" />
+
+    <EditText
         android:id="@+id/textViewAddSentence"
-        android:hint="Enter Sentence"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Sentence" />
+
     <View
-        android:layout_margin="5dp"
-        android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="@color/colorPrimaryDark"/>
+        android:layout_margin="5dp"
+        android:background="@color/colorPrimaryDark"
+        android:padding="5dp" />
 </LinearLayout>

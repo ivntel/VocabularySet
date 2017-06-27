@@ -30,7 +30,7 @@ public class WordsDatabase extends AppCompatActivity {
 
         dbRecyclerView = (RecyclerView) findViewById(R.id.wordDbRecyclerView);
 
-        ArrayList<HashMap<String,Object>> wordList = databaseHandler.getWordInfo();
+        ArrayList<HashMap<String, Object>> wordList = databaseHandler.getWordInfo();
 
         dbRecyclerView.setHasFixedSize(false);
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

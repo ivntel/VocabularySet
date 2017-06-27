@@ -36,7 +36,7 @@ import static android.R.attr.animation;
 
 public class ShowActivity extends AppCompatActivity {
 
-    public TextView word, curPos,totalSize, meaning, sentence, resultTextView, hearWordText, userSpeech;
+    public TextView word, curPos, totalSize, meaning, sentence, resultTextView, hearWordText, userSpeech;
     public static String resId = null;
     public List<Word> vocabWords = new ArrayList<Word>();
     FloatingActionButton next, prev, hearWordButton;
@@ -47,6 +47,7 @@ public class ShowActivity extends AppCompatActivity {
     FloatingActionButton speakButton;
     TextToSpeech t1;
     private final int REQ_CODE_SPEECH_INPUT = 100;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,15 +58,15 @@ public class ShowActivity extends AppCompatActivity {
         word = (TextView) findViewById(R.id.textViewWord);
         cardView = (CardView) findViewById(R.id.firstCard);
         constraintLayout = (ConstraintLayout) findViewById(R.id.constraintFlip);
-        curPos = (TextView)findViewById(R.id.textViewCurPos);
-        totalSize = (TextView)findViewById(R.id.textViewSize);
-        next = (FloatingActionButton)findViewById(R.id.floatingActionButtonNextWord);
-        prev = (FloatingActionButton)findViewById(R.id.floatingActionButtonPreviousWord);
-        speakButton = (FloatingActionButton)findViewById(R.id.floatingActionButtonSpeak);
-        resultTextView = (TextView)findViewById(R.id.textViewSTTResult);
-        userSpeech = (TextView)findViewById(R.id.textViewUserSpeech);
-        hearWordButton = (FloatingActionButton)findViewById(R.id.floatingActionButtonHearPronounciation);
-        hearWordText = (TextView)findViewById(R.id.textViewHearPronounciation);
+        curPos = (TextView) findViewById(R.id.textViewCurPos);
+        totalSize = (TextView) findViewById(R.id.textViewSize);
+        next = (FloatingActionButton) findViewById(R.id.floatingActionButtonNextWord);
+        prev = (FloatingActionButton) findViewById(R.id.floatingActionButtonPreviousWord);
+        speakButton = (FloatingActionButton) findViewById(R.id.floatingActionButtonSpeak);
+        resultTextView = (TextView) findViewById(R.id.textViewSTTResult);
+        userSpeech = (TextView) findViewById(R.id.textViewUserSpeech);
+        hearWordButton = (FloatingActionButton) findViewById(R.id.floatingActionButtonHearPronounciation);
+        hearWordText = (TextView) findViewById(R.id.textViewHearPronounciation);
         curPos.setText("1");
         mProgressBar.setVisibility(View.VISIBLE);
 
@@ -81,14 +82,13 @@ public class ShowActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Get Words Successful!", Toast.LENGTH_SHORT).show();
                 vocabWords = value.getWords();
                 totalSize.setText(String.valueOf(vocabWords.size()));
-                if(vocabWords.size() == 0){
+                if (vocabWords.size() == 0) {
                     word.setText("YOU HAVE NO WORDS");
                     next.setVisibility(View.GONE);
                     prev.setVisibility(View.GONE);
-                }
-                else {
+                } else {
 
-                    word.setText(vocabWords.get(Integer.parseInt(curPos.getText().toString())-1).getName());
+                    word.setText(vocabWords.get(Integer.parseInt(curPos.getText().toString()) - 1).getName());
                 }
                 mProgressBar.setVisibility(View.GONE);
             }
@@ -113,37 +113,38 @@ public class ShowActivity extends AppCompatActivity {
 
 
     }
-    public void cardViewClicked(View v){
+
+    public void cardViewClicked(View v) {
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.swing_up_right);
         constraintLayout = (ConstraintLayout) findViewById(R.id.constraintFlip);
         constraintLayout.startAnimation(animation);
         flipCurrentCounter = Integer.parseInt(curPos.getText().toString()) - 1;
-        Toast.makeText(getApplicationContext(),"Card View Clicked",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Card View Clicked", Toast.LENGTH_SHORT).show();
         setContentView(R.layout.flipped_layout);
 
         meaning = (TextView) findViewById(R.id.displayMeaning);
         sentence = (TextView) findViewById(R.id.displaySentence);
-        if(vocabWords.size() != 0) {
+        if (vocabWords.size() != 0) {
             meaning.setText(vocabWords.get(Integer.parseInt(curPos.getText().toString()) - 1).getMeaning());
             sentence.setText(vocabWords.get(Integer.parseInt(curPos.getText().toString()) - 1).getSentence());
         }
-        cardViewFlipped = (CardView)findViewById(R.id.flippedCard);
+        cardViewFlipped = (CardView) findViewById(R.id.flippedCard);
         cardViewFlipped.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Card View Clicked",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Card View Clicked", Toast.LENGTH_SHORT).show();
                 flipBack = (ConstraintLayout) findViewById(R.id.flipBackConstraintLayout);
                 Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.swing_up_left);
                 flipBack.startAnimation(animation);
 
                 setContentView(R.layout.activity_show);
-                Log.d("Check for text", vocabWords.get(Integer.parseInt(curPos.getText().toString())-1).getName());
+                Log.d("Check for text", vocabWords.get(Integer.parseInt(curPos.getText().toString()) - 1).getName());
                 word = (TextView) findViewById(R.id.textViewWord);
-                curPos = (TextView)findViewById(R.id.textViewCurPos);
-                speakButton = (FloatingActionButton)findViewById(R.id.floatingActionButtonSpeak);
-                resultTextView = (TextView)findViewById(R.id.textViewSTTResult);
-                hearWordButton = (FloatingActionButton)findViewById(R.id.floatingActionButtonHearPronounciation);
-                hearWordText = (TextView)findViewById(R.id.textViewHearPronounciation);
+                curPos = (TextView) findViewById(R.id.textViewCurPos);
+                speakButton = (FloatingActionButton) findViewById(R.id.floatingActionButtonSpeak);
+                resultTextView = (TextView) findViewById(R.id.textViewSTTResult);
+                hearWordButton = (FloatingActionButton) findViewById(R.id.floatingActionButtonHearPronounciation);
+                hearWordText = (TextView) findViewById(R.id.textViewHearPronounciation);
 
                 speakButton.setOnClickListener(new View.OnClickListener() {
 
@@ -153,14 +154,15 @@ public class ShowActivity extends AppCompatActivity {
                     }
                 });
 
-                totalSize = (TextView)findViewById(R.id.textViewSize);
+                totalSize = (TextView) findViewById(R.id.textViewSize);
                 word.setText(vocabWords.get(flipCurrentCounter).getName());
-                curPos.setText(String.valueOf(flipCurrentCounter+1));
+                curPos.setText(String.valueOf(flipCurrentCounter + 1));
                 totalSize.setText(String.valueOf(vocabWords.size()));
             }
         });
     }
-    public void nextVocabWord(View v){
+
+    public void nextVocabWord(View v) {
         next.setClickable(true);
         prev.setClickable(true);
         hearWordText.setVisibility(View.GONE);
@@ -170,17 +172,17 @@ public class ShowActivity extends AppCompatActivity {
         int tempPos = Integer.parseInt(curPos.getText().toString());
         // tempSize = 12
         int tempSize = Integer.parseInt(totalSize.getText().toString());
-        if (tempPos<tempSize){
+        if (tempPos < tempSize) {
 
             word.setText(vocabWords.get(tempPos).getName());
             ++tempPos;
             curPos.setText(String.valueOf(tempPos));
-        }
-        else{
+        } else {
             next.setClickable(false);
         }
     }
-    public  void previousVocabWord(View v){
+
+    public void previousVocabWord(View v) {
         prev.setClickable(true);
         next.setClickable(true);
         hearWordText.setVisibility(View.GONE);
@@ -188,15 +190,15 @@ public class ShowActivity extends AppCompatActivity {
         resultTextView.setText("Result");
         int tempPos = Integer.parseInt(curPos.getText().toString());
         int tempSize = Integer.parseInt(totalSize.getText().toString());
-        if (tempPos>1){
+        if (tempPos > 1) {
             --tempPos;
             curPos.setText(String.valueOf(tempPos));
             word.setText(vocabWords.get(tempPos).getName());
-        }
-        else {
+        } else {
             prev.setClickable(false);
         }
     }
+
     private void askSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
@@ -224,19 +226,18 @@ public class ShowActivity extends AppCompatActivity {
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     //voiceInput.setText(result.get(0));
-                    if(word.getText().toString().equalsIgnoreCase(result.get(0))){
+                    if (word.getText().toString().equalsIgnoreCase(result.get(0))) {
                         resultTextView.setText("CORRECT");
-                    }
-                    else {
+                    } else {
                         resultTextView.setText("INCORRECT");
                         hearWordText.setVisibility(View.VISIBLE);
                         hearWordButton.setVisibility(View.VISIBLE);
                         Toast.makeText(getApplicationContext(), "What you said: " + "\"" + result.get(0) + "\"", Toast.LENGTH_LONG).show();
 
-                        t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+                        t1 = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
                             @Override
                             public void onInit(int status) {
-                                if(status != TextToSpeech.ERROR) {
+                                if (status != TextToSpeech.ERROR) {
                                     t1.setLanguage(Locale.UK);
 
                                 }

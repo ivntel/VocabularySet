@@ -21,8 +21,9 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main_gcv"
-        android:id="@+id/include" />
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_main_gcv" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -36,21 +37,21 @@
         android:id="@+id/buttonTranslate"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:onClick="translateButtonClicked"
         android:text="Translate To Spanish"
-        app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="bottom"
         android:visibility="gone"
-        android:onClick="translateButtonClicked"/>
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="bottom" />
 
     <Button
         android:id="@+id/buttonDictionary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|right"
+        android:onClick="dictionaryButtonClicked"
         android:text="Dictionary"
-        app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="bottom|center_horizontal"
         android:visibility="gone"
-        android:onClick="dictionaryButtonClicked"/>
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="bottom|center_horizontal" />
 
 </android.support.design.widget.CoordinatorLayout>

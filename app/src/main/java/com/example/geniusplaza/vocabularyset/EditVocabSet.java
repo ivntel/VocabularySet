@@ -35,59 +35,60 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+import static android.R.attr.value;
+
 public class EditVocabSet extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    EditText title,description,word,meaning,sentence;
+    EditText title, description, word, meaning, sentence;
     RecyclerView vocabularySetRecyclerView;
     LinearLayoutManager mLayoutManager;
     Spinner spinnerLanguage;
     public String text, tempLangText;
-    public static String resourceId = null;
+    public static String resourceId;
     AddWordAdapter mAdapter;
     ProgressBar mProgressBar;
     public Bundle extras;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_vocab_set);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerViewEditVS);
-        title = (EditText)findViewById(R.id.editTextTitle);
-        description = (EditText)findViewById(R.id.editTextDescription);
+        title = (EditText) findViewById(R.id.editTextTitle);
+        description = (EditText) findViewById(R.id.editTextDescription);
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar_edit);
 
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        spinnerLanguage = (Spinner)findViewById(R.id.spinnerLanguage);
+        spinnerLanguage = (Spinner) findViewById(R.id.spinnerLanguage);
         List<String> lang = new ArrayList<String>();
-        String[] langItems = new String []{"English", "Spanish"};
+        String[] langItems = new String[]{"English", "Spanish"};
         ArrayAdapter<String> myadapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, langItems);
         myadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerLanguage.setAdapter(myadapter);
         text = spinnerLanguage.getSelectedItem().toString();
 
-            if(text.equals("English")){
-                tempLangText = "1";
-            }
-            else{
-                tempLangText = "2";
-            }
+        if (text.equals("English")) {
+            tempLangText = "1";
+        } else {
+            tempLangText = "2";
+        }
 
 
         extras = getIntent().getExtras();
-        Log.d("Check intent value", (String.valueOf(extras.getInt("check")) ));
-        if (extras.getInt("check") == 0 ){
+        Log.d("Check intent value", (String.valueOf(extras.getInt("check"))));
+        if (extras.getInt("check") == 0) {
             recyclerView.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             mProgressBar.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.VISIBLE);
             Log.d("Edit0 Clicked", "Recycler view");
             Log.d("value of resource id", resourceId);
             //MainActivity.getRefreshToken(ApiConstants.refreshToken);
             Log.d("Accesstoken frm edit: ", ApiConstants.accessToken);
-            RestClient.getExampleApi().flashcardCreate("Bearer " + ApiConstants.accessToken,resourceId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<WordsResource>() {
+            RestClient.getExampleApi().flashcardCreate("Bearer " + ApiConstants.accessToken, resourceId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<WordsResource>() {
                 @Override
                 public void onSubscribe(Disposable d) {
 
@@ -122,12 +123,11 @@ public class EditVocabSet extends AppCompatActivity {
 
     }
 
-    public void saveButtonClicked(View v){
-        if (extras.getInt("check") == 0 ){
-            if(title.getText().toString() == null || description.getText().toString() == null ){
+    public void saveButtonClicked(View v) {
+        if (extras.getInt("check") == 0) {
+            if (title.getText().toString() == null || description.getText().toString() == null) {
                 Toast.makeText(getApplicationContext(), "Please input the needed information", Toast.LENGTH_SHORT).show();
-            }
-            else {
+            } else {
                 //MainActivity.getRefreshToken(ApiConstants.refreshToken);
                 CreateVocabSetBody createVocabSetBody = new CreateVocabSetBody(title.getText().toString(), description.getText().toString(), "1", "4");
                 RestClient.getExampleApi().createVocabSet("Bearer " + ApiConstants.accessToken, createVocabSetBody).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<CreateResource>() {
@@ -141,7 +141,7 @@ public class EditVocabSet extends AppCompatActivity {
                         Log.d("Successful response", "in add vocab set");
                         Log.d("zzzzzzz", value.getError());
                         Toast.makeText(getApplicationContext(), "Save successful", Toast.LENGTH_SHORT).show();
-                        if(DBRecyclerViewAdapter.createVocabSetCheck == 0){
+                        if (DBRecyclerViewAdapter.createVocabSetCheck == 0) {
                             ApiConstants.databaseResId = value.getResourceId().toString();
 
                             DBRecyclerViewAdapter.createVocabSetCheck = 1;
@@ -165,10 +165,9 @@ public class EditVocabSet extends AppCompatActivity {
                 Intent i = new Intent(this, VocabDashboard.class);
                 startActivity(i);
             }
-        }
-        else {
+        } else {
             EditVocabSetBody editVocabSetBody = new EditVocabSetBody(title.getText().toString(), description.getText().toString(), "1");
-            RestClient.getExampleApi().editVocabSet("Bearer " + ApiConstants.accessToken, resourceId,editVocabSetBody)
+            RestClient.getExampleApi().editVocabSet("Bearer " + ApiConstants.accessToken, resourceId, editVocabSetBody)
                     .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<EditVocabSetResponse>() {
                 @Override
                 public void onSubscribe(Disposable d) {
@@ -178,8 +177,6 @@ public class EditVocabSet extends AppCompatActivity {
                 @Override
                 public void onNext(EditVocabSetResponse value) {
                     Toast.makeText(getApplicationContext(), "Edit Success!", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(EditVocabSet.this,VocabDashboard.class);
-                    startActivity(i);
                 }
 
                 @Override
@@ -196,12 +193,13 @@ public class EditVocabSet extends AppCompatActivity {
 
     }
 
-    public void cancelButtonClicked(View v){
+    public void cancelButtonClicked(View v) {
         Toast.makeText(getApplicationContext(), "Canceled", Toast.LENGTH_SHORT).show();
         Intent i = new Intent(this, VocabDashboard.class);
         startActivity(i);
     }
-    public void addNewWordButtonClicked(View v){
+
+    public void addNewWordButtonClicked(final View v) {
         //Toast.makeText(getApplicationContext(),"add new word clicked", Toast.LENGTH_SHORT).show();
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
@@ -212,10 +210,10 @@ public class EditVocabSet extends AppCompatActivity {
         wordName = (EditText) dialogView.findViewById(R.id.textViewAddWord);
         wordMeaning = (EditText) dialogView.findViewById(R.id.textViewAddMeaning);
         wordSentence = (EditText) dialogView.findViewById(R.id.textViewAddSentence);
-        wordOrder =(EditText) dialogView.findViewById(R.id.textViewOrder);
+        wordOrder = (EditText) dialogView.findViewById(R.id.textViewOrder);
         wordType = (Spinner) dialogView.findViewById(R.id.spinnerWordType);
         List<String> lang = new ArrayList<String>();
-        String[] langItems = new String []{"Noun", "Verb", "Adjective", "Adverb", "Conjuction", "Abbreviation", "Exclamation", "Preposition", "Pronoun", "Article", "Determiner"};
+        String[] langItems = new String[]{"Noun", "Verb", "Adjective", "Adverb", "Conjuction", "Abbreviation", "Exclamation", "Preposition", "Pronoun", "Article", "Determiner"};
         ArrayAdapter<String> myadapter = new ArrayAdapter<String>(dialogView.getContext(), android.R.layout.simple_spinner_item, langItems);
         myadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         wordType.setAdapter(myadapter);
@@ -227,8 +225,8 @@ public class EditVocabSet extends AppCompatActivity {
                 //do something with edt.getText().toString();
                 Log.d("Accesstoken 3: ", ApiConstants.accessToken);
                 //MainActivity.getRefreshToken(ApiConstants.refreshToken);
-                AddWordBody addWordBody = new AddWordBody(wordOrder.getText().toString(),wordName.getText().toString(),wordMeaning.getText().toString(), wordSentence.getText().toString(),"1");
-                RestClient.getExampleApi().addVocabWords("Bearer " + ApiConstants.accessToken ,resourceId, addWordBody).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<AddWordResponse>() {
+                AddWordBody addWordBody = new AddWordBody(wordOrder.getText().toString(), wordName.getText().toString(), wordMeaning.getText().toString(), wordSentence.getText().toString(), "1");
+                RestClient.getExampleApi().addVocabWords("Bearer " + ApiConstants.accessToken, resourceId, addWordBody).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<AddWordResponse>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
@@ -236,12 +234,15 @@ public class EditVocabSet extends AppCompatActivity {
 
                     @Override
                     public void onNext(AddWordResponse value) {
-                        Toast.makeText(getApplicationContext(),"Successfully saved", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Successfully saved", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(EditVocabSet.this, EditVocabSet.class);
+                        i.putExtra("check", 1);
+                        startActivity(i);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(getApplicationContext(),"Enter a valid Order Num", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Enter a valid Order Num", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

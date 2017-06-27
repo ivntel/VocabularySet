@@ -1,9 +1,5 @@
 package com.example.geniusplaza.vocabularyset.GoogleCloudVision.sample.Retrofit;
 
-/**
- * Created by geniusplaza on 6/23/17.
- */
-
 import com.example.geniusplaza.vocabularyset.GoogleCloudVision.sample.POJO.WordContent;
 
 import io.reactivex.Observable;

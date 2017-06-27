@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#CCCCCC"
     android:orientation="vertical"
-    tools:context="com.example.geniusplaza.vocabularyset.MainActivity"
     android:padding="25dp"
-    android:background="#CCCCCC">
+    tools:context="com.example.geniusplaza.vocabularyset.MainActivity">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -22,40 +21,41 @@
             android:layout_height="wrap_content">
 
 
-        <EditText
-            android:id="@+id/username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:hint="Enter the user name"
-            android:text="ivanstudent" />
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:hint="Enter the user name"
+                android:text="ivanstudent" />
 
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:hint="Enter the password"
-            android:text="123"
-            android:layout_below="@+id/username"
-            android:paddingTop="20dp"/>
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/username"
+                android:gravity="center_horizontal"
+                android:hint="Enter the password"
+                android:paddingTop="20dp"
+                android:text="123" />
 
-        <Button
-            android:id="@+id/loginbutton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="loginButtonClicked"
-            android:text="LOGIN"
-            android:layout_below="@+id/password"
-            android:paddingTop="20dp"/>
+            <Button
+                android:id="@+id/loginbutton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/password"
+                android:layout_gravity="center"
+                android:onClick="loginButtonClicked"
+                android:paddingTop="20dp"
+                android:text="LOGIN" />
+
             <ProgressBar
                 android:id="@+id/progress_bar_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:visibility="gone"
-                android:indeterminateTint="#000000"/>
+                android:indeterminateTint="#000000"
+                android:visibility="gone" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 

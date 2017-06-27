@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.geniusplaza.vocabularyset.DictionaryActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.example.geniusplaza.vocabularyset.DictionaryActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,8 +17,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="MEANING:"
-            android:textSize="25dp"
-            />
+            android:textSize="25dp" />
+
         <TextView
             android:id="@+id/textViewDefinition"
             android:layout_width="wrap_content"
@@ -31,20 +31,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SENTENCE:"
-            android:textSize="25dp"
-            />
+            android:textSize="25dp" />
+
         <TextView
             android:id="@+id/textViewExample"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"
             android:textSize="20dp" />
+
         <Button
+            android:id="@+id/addToDatabaseButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save to remember"
-            android:id="@+id/addToDatabaseButton"
             android:layout_gravity="bottom|center_horizontal"
-            android:onClick="addToDatabaseButtonClicked"/>
+            android:onClick="addToDatabaseButtonClicked"
+            android:text="Save to remember" />
     </LinearLayout>
 </ScrollView>

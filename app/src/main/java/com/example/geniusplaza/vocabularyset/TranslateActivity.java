@@ -37,9 +37,10 @@ public class TranslateActivity extends AppCompatActivity {
 
     String englishWord;
     TextView textViewSpanish, textViewEnglish;
-    TextToSpeech t1,t2;
+    TextToSpeech t1, t2;
     public String spanishTranslation;
     Button bSpanish, bEnglish;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +50,8 @@ public class TranslateActivity extends AppCompatActivity {
 
         textViewSpanish = (TextView) findViewById(R.id.textViewSpanish);
         textViewEnglish = (TextView) findViewById(R.id.textViewEnglish);
-        bSpanish = (Button)findViewById(R.id.buttonSpanish);
-        bEnglish = (Button)findViewById(R.id.buttonEnglish);
+        bSpanish = (Button) findViewById(R.id.buttonSpanish);
+        bEnglish = (Button) findViewById(R.id.buttonEnglish);
         textViewEnglish.setText(englishWord);
 
         if (englishWord != null) {
@@ -59,21 +60,21 @@ public class TranslateActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
 
             new SaveTheFeed().execute();
-            t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            t1 = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
                 @Override
                 public void onInit(int status) {
-                    if(status != TextToSpeech.ERROR) {
+                    if (status != TextToSpeech.ERROR) {
                         t1.setLanguage(Locale.UK);
 
                     }
                 }
             });
-            t2=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            t2 = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
                 @Override
                 public void onInit(int status) {
-                    if(status != TextToSpeech.ERROR) {
+                    if (status != TextToSpeech.ERROR) {
                         //t1.setLanguage(Locale.UK);
-                        Locale locSpanish = new Locale("spa","MEX");
+                        Locale locSpanish = new Locale("spa", "MEX");
                         t2.setLanguage(locSpanish);
                     }
                 }
@@ -82,7 +83,7 @@ public class TranslateActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     String toSpeak = textViewSpanish.getText().toString();
-                    Toast.makeText(getApplicationContext(), toSpeak,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), toSpeak, Toast.LENGTH_SHORT).show();
                     t2.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
                 }
             });
@@ -90,7 +91,7 @@ public class TranslateActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     String toSpeak = textViewEnglish.getText().toString();
-                    Toast.makeText(getApplicationContext(), toSpeak,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), toSpeak, Toast.LENGTH_SHORT).show();
                     t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
                 }
             });
@@ -152,7 +153,7 @@ public class TranslateActivity extends AppCompatActivity {
 
                 JSONArray jArray = jObject.getJSONArray("translations");
                 JSONObject translationObject = jArray.getJSONObject(9);
-                Log.d("holllla",translationObject.getString("spanish"));
+                Log.d("holllla", translationObject.getString("spanish"));
                 Log.d("jArray value: ", jArray.toString());
                 Log.d("trryyyyyyyyyy", jArray.get(9).toString());
                 spanishTranslation = translationObject.getString("spanish");

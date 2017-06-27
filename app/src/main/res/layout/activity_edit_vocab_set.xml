@@ -95,9 +95,9 @@
                 android:layout_height="match_parent"
                 android:layout_above="@+id/buttonSave"
                 android:layout_alignParentEnd="true"
-                android:visibility="visible"
                 android:layout_below="@+id/spinnerLanguage"
-                android:background="#CCCCCC"/>
+                android:background="#CCCCCC"
+                android:visibility="visible" />
 
             <TextView
                 android:id="@+id/textView"

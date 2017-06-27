@@ -63,6 +63,7 @@ public class MainActivityGCV extends AppCompatActivity {
     private ImageView mMainImage;
     ProgressBar mProgressBar;
     public static Bitmap bitmap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,7 +100,7 @@ public class MainActivityGCV extends AppCompatActivity {
         mImageDetails = (TextView) findViewById(R.id.image_details);
         mMainImage = (ImageView) findViewById(R.id.main_image);
         translate = (Button) findViewById(R.id.buttonTranslate);
-        dictionaryButton = (Button)findViewById(R.id.buttonDictionary);
+        dictionaryButton = (Button) findViewById(R.id.buttonDictionary);
     }
 
     public void startGalleryChooser() {
@@ -238,23 +239,21 @@ public class MainActivityGCV extends AppCompatActivity {
                         base64EncodedImage.encodeContent(imageBytes);
                         annotateImageRequest.setImage(base64EncodedImage);
 
-                        if (ChooseActivity.optSelected.equals("o")){
+                        if (ChooseActivity.optSelected.equals("o")) {
                             annotateImageRequest.setFeatures(new ArrayList<Feature>() {{
                                 Feature labelDetection = new Feature();
                                 labelDetection.setType("LABEL_DETECTION");
                                 labelDetection.setMaxResults(10);
                                 add(labelDetection);
                             }});
-                        }
-                        else if (ChooseActivity.optSelected.equals("t")){
+                        } else if (ChooseActivity.optSelected.equals("t")) {
                             annotateImageRequest.setFeatures(new ArrayList<Feature>() {{
                                 Feature textDetection = new Feature();
                                 textDetection.setType("TEXT_DETECTION");
                                 textDetection.setMaxResults(10);
                                 add(textDetection);
                             }});
-                        }
-                        else if (ChooseActivity.optSelected.equals("l")){
+                        } else if (ChooseActivity.optSelected.equals("l")) {
                             annotateImageRequest.setFeatures(new ArrayList<Feature>() {{
                                 Feature landmarkDetection = new Feature();
                                 landmarkDetection.setType("LANDMARK_DETECTION");
@@ -336,12 +335,12 @@ public class MainActivityGCV extends AppCompatActivity {
         StringBuilder message = new StringBuilder("Results:\n\n");
         message.append("Object:\n");
 
-        if (ChooseActivity.optSelected.equals("o")){
+        if (ChooseActivity.optSelected.equals("o")) {
             List<EntityAnnotation> labels = response.getResponses().get(0).getLabelAnnotations();
             if (labels != null) {
                 //spanishString.add(response.getResponses().get(0).getLabelAnnotations().get(0).setLocale("es").getDescription());
                 imageArray.add(response.getResponses().get(0).getLabelAnnotations().get(0).getDescription());
-                Log.d("trrrryyy",imageArray.toString());
+                Log.d("trrrryyy", imageArray.toString());
                 for (EntityAnnotation label : labels) {
                     message.append(String.format(Locale.getDefault(), "%.3f: %s",
                             label.getScore(), label.getDescription()));
@@ -351,13 +350,12 @@ public class MainActivityGCV extends AppCompatActivity {
             } else {
                 message.append("nothing\n");
             }
-        }
-        else if(ChooseActivity.optSelected.equals("t")){
+        } else if (ChooseActivity.optSelected.equals("t")) {
             message.append("Texts:\n");
             List<EntityAnnotation> texts = response.getResponses().get(0)
                     .getTextAnnotations();
             if (texts != null) {
-                Log.d("in text",response.getResponses().toString());
+                Log.d("in text", response.getResponses().toString());
                 imageArray.add(response.getResponses().get(0).getTextAnnotations().get(0).getDescription().replace("\n", " "));
                 Log.d("trial", imageArray.toString());
                 for (EntityAnnotation text : texts) {
@@ -368,8 +366,7 @@ public class MainActivityGCV extends AppCompatActivity {
             } else {
                 message.append("nothing\n");
             }
-        }
-        else if (ChooseActivity.optSelected.equals("l")){
+        } else if (ChooseActivity.optSelected.equals("l")) {
             message.append("Landmarks:\n");
             List<EntityAnnotation> landmarks = response.getResponses().get(0)
                     .getLandmarkAnnotations();
@@ -385,25 +382,25 @@ public class MainActivityGCV extends AppCompatActivity {
             }
         }
 
-        Log.d("Arrrayyyy",imageArray.toString());
+        Log.d("Arrrayyyy", imageArray.toString());
 
         return message.toString();
     }
-    public void translateButtonClicked(View view){
-        if(imageArray == null){
-            Toast.makeText(getApplicationContext(),"TAKE ANOTHER PICTURE",Toast.LENGTH_SHORT).show();
-        }
-        else{
+
+    public void translateButtonClicked(View view) {
+        if (imageArray == null) {
+            Toast.makeText(getApplicationContext(), "TAKE ANOTHER PICTURE", Toast.LENGTH_SHORT).show();
+        } else {
             Intent i = new Intent(this, TranslateActivity.class);
             startActivity(i);
         }
 
     }
-    public void dictionaryButtonClicked(View view){
-        if(imageArray == null){
-            Toast.makeText(getApplicationContext(),"TAKE ANOTHER PICTURE",Toast.LENGTH_SHORT).show();
-        }
-        else{
+
+    public void dictionaryButtonClicked(View view) {
+        if (imageArray == null) {
+            Toast.makeText(getApplicationContext(), "TAKE ANOTHER PICTURE", Toast.LENGTH_SHORT).show();
+        } else {
             Intent i = new Intent(this, DictionaryActivity.class);
             startActivity(i);
         }

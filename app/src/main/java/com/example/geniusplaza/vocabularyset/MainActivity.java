@@ -34,9 +34,10 @@ public class MainActivity extends AppCompatActivity {
     String userName, password, secretKey;
     ApiConstants apiConstants;
     public AuthToken authToken;
-    public  String accessToken;
+    public String accessToken;
     Button loginButton;
     ProgressBar mProgressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,21 +48,21 @@ public class MainActivity extends AppCompatActivity {
         authToken = new AuthToken();
 
     }
-    public void loginButtonClicked(View v){
-        uname = (EditText)findViewById(R.id.username);
-        pword = (EditText)findViewById(R.id.password);
+
+    public void loginButtonClicked(View v) {
+        uname = (EditText) findViewById(R.id.username);
+        pword = (EditText) findViewById(R.id.password);
         userName = uname.getText().toString();
         password = pword.getText().toString();
         Log.d("aaaaaaaa", userName);
         Log.d("aaaaaaaa", password);
-        if (userName == null || password == null){
+        if (userName == null || password == null) {
             Toast.makeText(this, "Enter the Credentials", Toast.LENGTH_SHORT).show();
-        }
-        else{
-            Log.d("Main Activity","API call");
+        } else {
+            Log.d("Main Activity", "API call");
             mProgressBar.setVisibility(View.VISIBLE);
             secretKey = apiConstants.getBase64();
-            RestClient.getExampleApi().postCredentials("Basic "+secretKey, userName, password, "password").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<AuthToken>() {
+            RestClient.getExampleApi().postCredentials("Basic " + secretKey, userName, password, "password").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<AuthToken>() {
                 @Override
                 public void onSubscribe(Disposable d) {
 
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onNext(AuthToken value) {
-                    Log.d("in main activity","SUCCCESSSS");
+                    Log.d("in main activity", "SUCCCESSSS");
                     accessToken = value.getAccessToken();
                     ApiConstants.accessToken = accessToken;
                     Log.d("Accesstoken Login: ", ApiConstants.accessToken);
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
+
     public static void getRefreshToken(final String refreshToken) {
         ApiConstants apiConstants = new ApiConstants();
         RestClient.getExampleApi().postRefreshToken("Basic " + apiConstants.getBase64(), refreshToken, "refresh_token").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<AuthToken>() {
@@ -118,8 +120,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
         /*final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override

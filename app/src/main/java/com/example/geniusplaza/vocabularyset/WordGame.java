@@ -55,7 +55,7 @@ public class WordGame extends AppCompatActivity {
     public static String resId = null;
     public List<Word> vocabWords = new ArrayList<Word>();
     TextView textViewWord, startLimit, endLimit, resultGame;
-    FloatingActionButton next,prev;
+    FloatingActionButton next, prev;
     ProgressBar mProgressBar;
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int GALLERY_PERMISSIONS_REQUEST = 0;
@@ -69,19 +69,20 @@ public class WordGame extends AppCompatActivity {
     public static Bitmap bitmap;
     public static List<String> imageArray;
     private ImageView mMainImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_word_game);
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar_wordGame);
-        textViewWord = (TextView)findViewById(R.id.textViewWordGame);
-        startLimit = (TextView)findViewById(R.id.textViewStartLimitGame);
-        endLimit = (TextView)findViewById(R.id.textViewEndLimitGame);
-        next = (FloatingActionButton)findViewById(R.id.floatingActionButtonNextGame);
-        prev = (FloatingActionButton)findViewById(R.id.floatingActionButtonPreviousGame);
-        mMainImage = (ImageView)findViewById(R.id.imageViewGame);
+        textViewWord = (TextView) findViewById(R.id.textViewWordGame);
+        startLimit = (TextView) findViewById(R.id.textViewStartLimitGame);
+        endLimit = (TextView) findViewById(R.id.textViewEndLimitGame);
+        next = (FloatingActionButton) findViewById(R.id.floatingActionButtonNextGame);
+        prev = (FloatingActionButton) findViewById(R.id.floatingActionButtonPreviousGame);
+        mMainImage = (ImageView) findViewById(R.id.imageViewGame);
         mProgressBar.setVisibility(View.VISIBLE);
-        resultGame = (TextView)findViewById(R.id.textViewResultGame);
+        resultGame = (TextView) findViewById(R.id.textViewResultGame);
         RestClient.getExampleApi().flashcardCreate("Bearer " + ApiConstants.accessToken, resId)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<WordsResource>() {
             @Override
@@ -94,14 +95,13 @@ public class WordGame extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Get Words Successful!", Toast.LENGTH_SHORT).show();
                 vocabWords = value.getWords();
                 endLimit.setText(String.valueOf(vocabWords.size()));
-                if(vocabWords.size() == 0){
+                if (vocabWords.size() == 0) {
                     textViewWord.setText("YOU HAVE NO WORDS");
                     next.setVisibility(View.GONE);
                     prev.setVisibility(View.GONE);
-                }
-                else {
+                } else {
 
-                    textViewWord.setText(vocabWords.get(Integer.parseInt(startLimit.getText().toString())-1).getName());
+                    textViewWord.setText(vocabWords.get(Integer.parseInt(startLimit.getText().toString()) - 1).getName());
                 }
                 mProgressBar.setVisibility(View.GONE);
             }
@@ -117,7 +117,8 @@ public class WordGame extends AppCompatActivity {
             }
         });
     }
-    public void nextVocabWordGame(View v){
+
+    public void nextVocabWordGame(View v) {
         next.setClickable(true);
         prev.setClickable(true);
 
@@ -125,32 +126,32 @@ public class WordGame extends AppCompatActivity {
         int tempPos = Integer.parseInt(startLimit.getText().toString());
         // tempSize = 12
         int tempSize = Integer.parseInt(endLimit.getText().toString());
-        if (tempPos<tempSize){
+        if (tempPos < tempSize) {
 
             textViewWord.setText(vocabWords.get(tempPos).getName());
             ++tempPos;
             startLimit.setText(String.valueOf(tempPos));
-        }
-        else{
+        } else {
             next.setClickable(false);
         }
     }
-    public void previousVocabWordGame(View v){
+
+    public void previousVocabWordGame(View v) {
         prev.setClickable(true);
         next.setClickable(true);
 
         int tempPos = Integer.parseInt(startLimit.getText().toString());
         int tempSize = Integer.parseInt(endLimit.getText().toString());
-        if (tempPos>1){
+        if (tempPos > 1) {
             --tempPos;
             startLimit.setText(String.valueOf(tempPos));
             textViewWord.setText(vocabWords.get(tempPos).getName());
-        }
-        else {
+        } else {
             prev.setClickable(false);
         }
     }
-    public void gameCameraButtonClicked(View v){
+
+    public void gameCameraButtonClicked(View v) {
         FloatingActionButton fabCamera = (FloatingActionButton) findViewById(R.id.floatingActionButtonCameraGame);
         fabCamera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,6 +177,7 @@ public class WordGame extends AppCompatActivity {
         });
 
     }
+
     public void startGalleryChooser() {
         //rxPermissions = new RxPermissions(this);
 
@@ -201,6 +203,7 @@ public class WordGame extends AppCompatActivity {
             startActivityForResult(intent, CAMERA_IMAGE_REQUEST);
         }
     }
+
     public File getCameraFile() {
         File dir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         return new File(dir, FILE_NAME);
@@ -257,6 +260,7 @@ public class WordGame extends AppCompatActivity {
             Toast.makeText(this, R.string.image_picker_error, Toast.LENGTH_LONG).show();
         }
     }
+
     private void callCloudVision(final Bitmap bitmap) throws IOException {
         // Switch text to loading
         //mImageDetails.setText(R.string.loading_message);
@@ -311,14 +315,12 @@ public class WordGame extends AppCompatActivity {
                         annotateImageRequest.setImage(base64EncodedImage);
 
 
-                            annotateImageRequest.setFeatures(new ArrayList<Feature>() {{
-                                Feature labelDetection = new Feature();
-                                labelDetection.setType("LABEL_DETECTION");
-                                labelDetection.setMaxResults(10);
-                                add(labelDetection);
-                            }});
-
-
+                        annotateImageRequest.setFeatures(new ArrayList<Feature>() {{
+                            Feature labelDetection = new Feature();
+                            labelDetection.setType("LABEL_DETECTION");
+                            labelDetection.setMaxResults(10);
+                            add(labelDetection);
+                        }});
 
 
                         add(annotateImageRequest);
@@ -345,7 +347,13 @@ public class WordGame extends AppCompatActivity {
             protected void onPostExecute(String result) {
                 mProgressBar.setVisibility(View.GONE);
                 //mImageDetails.setText(result);
-                resultGame.setText(imageArray.get(0));
+                if (textViewWord.getText().toString().equalsIgnoreCase(imageArray.get(0))) {
+                    resultGame.setText("CORRECT");
+                } else {
+                    resultGame.setText("INCORRECT");
+                    Toast.makeText(getApplicationContext(), "YOU TOOK PICTURE OF: " + "\"" + imageArray.get(0) + "\"", Toast.LENGTH_LONG).show();
+                }
+                //resultGame.setText(imageArray.get(0));
 
             }
         }.execute();
@@ -378,24 +386,23 @@ public class WordGame extends AppCompatActivity {
         message.append("Object:\n");
 
 
-            List<EntityAnnotation> labels = response.getResponses().get(0).getLabelAnnotations();
-            if (labels != null) {
-                //spanishString.add(response.getResponses().get(0).getLabelAnnotations().get(0).setLocale("es").getDescription());
-                imageArray.add(response.getResponses().get(0).getLabelAnnotations().get(0).getDescription());
-                Log.d("trrrryyy",imageArray.toString());
-                for (EntityAnnotation label : labels) {
-                    message.append(String.format(Locale.getDefault(), "%.3f: %s",
-                            label.getScore(), label.getDescription()));
+        List<EntityAnnotation> labels = response.getResponses().get(0).getLabelAnnotations();
+        if (labels != null) {
+            //spanishString.add(response.getResponses().get(0).getLabelAnnotations().get(0).setLocale("es").getDescription());
+            imageArray.add(response.getResponses().get(0).getLabelAnnotations().get(0).getDescription());
+            Log.d("trrrryyy", imageArray.toString());
+            for (EntityAnnotation label : labels) {
+                message.append(String.format(Locale.getDefault(), "%.3f: %s",
+                        label.getScore(), label.getDescription()));
 
-                    message.append("\n");
-                }
-            } else {
-                message.append("nothing\n");
+                message.append("\n");
             }
+        } else {
+            message.append("nothing\n");
+        }
 
 
-
-        Log.d("Arrrayyyy",imageArray.toString());
+        Log.d("Arrrayyyy", imageArray.toString());
 
         return message.toString();
     }

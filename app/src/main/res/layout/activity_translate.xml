@@ -4,45 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.geniusplaza.vocabularyset.TranslateActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.example.geniusplaza.vocabularyset.TranslateActivity">
 
     <TextView
         android:id="@+id/textViewSpanishHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SPANISH:"
-        android:textSize="30dp"
-        />
+        android:textSize="30dp" />
+
     <TextView
         android:id="@+id/textViewSpanish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SPANISH WORD"
-        android:textSize="20dp"
-        />
+        android:textSize="20dp" />
 
     <TextView
         android:id="@+id/textViewEnglishHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ENGLISH:"
-        android:textSize="30dp"/>
+        android:textSize="30dp" />
+
     <TextView
         android:id="@+id/textViewEnglish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ENGLISH WORD"
-        android:textSize="20dp"
-        />
+        android:textSize="20dp" />
+
     <Button
+        android:id="@+id/buttonSpanish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Spanish Pronunciation"
-        android:id="@+id/buttonSpanish"/>
+        android:text="Spanish Pronunciation" />
+
     <Button
+        android:id="@+id/buttonEnglish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="English Pronunciation"
-        android:id="@+id/buttonEnglish"/>
+        android:text="English Pronunciation" />
 </LinearLayout>
