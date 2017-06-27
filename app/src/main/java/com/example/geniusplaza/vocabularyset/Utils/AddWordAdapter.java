@@ -42,8 +42,9 @@ import retrofit2.Response;
  * Created by geniusplaza on 6/21/17.
  */
 
+//RecyclerView Adapter to populate EditVocab set Recyclerview.
+//'row_recycler' layout is populated in each row and it is also used to add a new word.
 public class AddWordAdapter extends RecyclerView.Adapter<AddWordAdapter.ViewHolder> {
-
 
     private WordsResource vocabSet = new WordsResource();
     private Context mContext;
@@ -79,8 +80,6 @@ public class AddWordAdapter extends RecyclerView.Adapter<AddWordAdapter.ViewHold
         return vh;
     }
 
-
-
     //Replace contents of a view(invoked by the layout manager)
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
@@ -100,6 +99,7 @@ public class AddWordAdapter extends RecyclerView.Adapter<AddWordAdapter.ViewHold
             holder.deleteWord.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
+                    //Api calls to delete single words.
                     RestClient.getExampleApi().deleteVocabWord("Bearer " + ApiConstants.accessToken, vocabSet.getWords().get(position).getId().toString())
                             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<AddWordResponse>() {
                         @Override
@@ -131,6 +131,7 @@ public class AddWordAdapter extends RecyclerView.Adapter<AddWordAdapter.ViewHold
             holder.editWord.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
+                    //Api call to edit word
                     EditWordBody editWordBody = new EditWordBody(holder.wordName.getText().toString(), holder.wordMeaning.getText().toString(), holder.wordSentence.getText().toString(), "2");
                     Log.d(TAG, "onClick: " + editWordBody.getWord());
                     RestClient.getExampleApi().editVocabWord("Bearer " + ApiConstants.accessToken, vocabSet.getWords().get(position).getId().toString(), editWordBody)

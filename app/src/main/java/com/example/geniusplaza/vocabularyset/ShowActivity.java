@@ -70,6 +70,9 @@ public class ShowActivity extends AppCompatActivity {
         curPos.setText("1");
         mProgressBar.setVisibility(View.VISIBLE);
 
+        //Api call to fetch words in a list to display them in flash cards.
+        //words are linked to vocabset with resource id set in adapter.
+        //This activity is associated with two xml 'activity_show' has the word. and 'flipped_layout' has meaning and sentence.
         RestClient.getExampleApi().flashcardCreate("Bearer " + ApiConstants.accessToken, resId)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<WordsResource>() {
             @Override
@@ -84,6 +87,7 @@ public class ShowActivity extends AppCompatActivity {
                 totalSize.setText(String.valueOf(vocabWords.size()));
                 if (vocabWords.size() == 0) {
                     word.setText("YOU HAVE NO WORDS");
+                    //logical changes to handle next and previous words not clicable once size limits have been reached.
                     next.setVisibility(View.GONE);
                     prev.setVisibility(View.GONE);
                 } else {
@@ -115,6 +119,7 @@ public class ShowActivity extends AppCompatActivity {
     }
 
     public void cardViewClicked(View v) {
+        //Animations handled here
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.swing_up_right);
         constraintLayout = (ConstraintLayout) findViewById(R.id.constraintFlip);
         constraintLayout.startAnimation(animation);
@@ -129,6 +134,8 @@ public class ShowActivity extends AppCompatActivity {
             sentence.setText(vocabWords.get(Integer.parseInt(curPos.getText().toString()) - 1).getSentence());
         }
         cardViewFlipped = (CardView) findViewById(R.id.flippedCard);
+        //1st flip displays meaning again flip back should go back to the same state of word not to the 1st word.
+        //handled that using a public static array vocabWords and curPos text view.
         cardViewFlipped.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -199,6 +206,7 @@ public class ShowActivity extends AppCompatActivity {
         }
     }
 
+    //This method handles the Speech-To-Text
     private void askSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
@@ -225,7 +233,7 @@ public class ShowActivity extends AppCompatActivity {
 
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    //voiceInput.setText(result.get(0));
+
                     if (word.getText().toString().equalsIgnoreCase(result.get(0))) {
                         resultTextView.setText("CORRECT");
                     } else {
@@ -234,6 +242,7 @@ public class ShowActivity extends AppCompatActivity {
                         hearWordButton.setVisibility(View.VISIBLE);
                         Toast.makeText(getApplicationContext(), "What you said: " + "\"" + result.get(0) + "\"", Toast.LENGTH_LONG).show();
 
+                        //this handles Text-To-Speech when a worng word is spoken to give right pronunciation
                         t1 = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
                             @Override
                             public void onInit(int status) {

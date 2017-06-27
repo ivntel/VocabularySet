@@ -40,6 +40,7 @@ import static com.example.geniusplaza.vocabularyset.ApiConstants.refreshToken;
  * Created by geniusplaza on 6/14/17.
  */
 
+//Populates the grid view adapters with vocabulary sets
 public class VocabDashGridviewAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     public List<ResourceNew> mResources;
@@ -92,6 +93,7 @@ public class VocabDashGridviewAdapter extends BaseAdapter {
             holder.delete = (FloatingActionButton) view.findViewById(R.id.vocabDashDeleteFB);
             holder.edit = (FloatingActionButton)view.findViewById(R.id.vocabDashEditFB);
             holder.goToGame = (Button)view.findViewById(R.id.buttonWordGame);
+            //the resource id saved for editing it.
             EditVocabSet.resourceId = mResources.get(position).getId().toString();
             view.setTag(holder);
         }
@@ -110,6 +112,8 @@ public class VocabDashGridviewAdapter extends BaseAdapter {
         if(resourceNew.getIcon() != "") {
             Glide.with(mContext).load(resourceNew.getIcon()).into(holder.userIconImageView);
         }
+
+        //OnClick listeners to handle the the various functionalities with intents to corresponding activities.
         holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,8 +123,7 @@ public class VocabDashGridviewAdapter extends BaseAdapter {
                 mContext.startActivity(i);
             }
         });
-        //Glide.with(mContext).load(resourceNew.getResourceImage()).into(holder.vocabSetImageView);
-        //Glide.with(mContext).load(resourceNew.getIcon()).into(holder.userIconImageView);
+
         holder.takeTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

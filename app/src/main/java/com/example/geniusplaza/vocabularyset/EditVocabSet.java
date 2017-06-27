@@ -79,16 +79,24 @@ public class EditVocabSet extends AppCompatActivity {
 
         extras = getIntent().getExtras();
         Log.d("Check intent value", (String.valueOf(extras.getInt("check"))));
+
+        //when check is '0' it implies save activity and recycler view made invisible.
         if (extras.getInt("check") == 0) {
             recyclerView.setVisibility(View.GONE);
         } else {
+            //In Edit activity
+
             mProgressBar.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.VISIBLE);
             Log.d("Edit0 Clicked", "Recycler view");
             Log.d("value of resource id", resourceId);
             //MainActivity.getRefreshToken(ApiConstants.refreshToken);
-            Log.d("Accesstoken frm edit: ", ApiConstants.accessToken);
-            RestClient.getExampleApi().flashcardCreate("Bearer " + ApiConstants.accessToken, resourceId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<WordsResource>() {
+            Log.d("Accesstoken from edit: ", ApiConstants.accessToken);
+
+            //Call to populate recyclerview of words with custom Adapter VocabDashGridView adapter.
+            //And even populate the title and description of vocab set
+            RestClient.getExampleApi().flashcardCreate("Bearer " + ApiConstants.accessToken, resourceId)
+                    .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<WordsResource>() {
                 @Override
                 public void onSubscribe(Disposable d) {
 
@@ -124,13 +132,18 @@ public class EditVocabSet extends AppCompatActivity {
     }
 
     public void saveButtonClicked(View v) {
+
+        //This one handles saving the new vocab set.
         if (extras.getInt("check") == 0) {
             if (title.getText().toString() == null || description.getText().toString() == null) {
                 Toast.makeText(getApplicationContext(), "Please input the needed information", Toast.LENGTH_SHORT).show();
             } else {
                 //MainActivity.getRefreshToken(ApiConstants.refreshToken);
+
+                //Api Call to create new vocab set.
                 CreateVocabSetBody createVocabSetBody = new CreateVocabSetBody(title.getText().toString(), description.getText().toString(), "1", "4");
-                RestClient.getExampleApi().createVocabSet("Bearer " + ApiConstants.accessToken, createVocabSetBody).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<CreateResource>() {
+                RestClient.getExampleApi().createVocabSet("Bearer " + ApiConstants.accessToken, createVocabSetBody)
+                        .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<CreateResource>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
@@ -166,6 +179,9 @@ public class EditVocabSet extends AppCompatActivity {
                 startActivity(i);
             }
         } else {
+
+            //This one handles Editing of Vocab Set
+            //Api call to edit
             EditVocabSetBody editVocabSetBody = new EditVocabSetBody(title.getText().toString(), description.getText().toString(), "1");
             RestClient.getExampleApi().editVocabSet("Bearer " + ApiConstants.accessToken, resourceId, editVocabSetBody)
                     .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<EditVocabSetResponse>() {
@@ -225,8 +241,12 @@ public class EditVocabSet extends AppCompatActivity {
                 //do something with edt.getText().toString();
                 Log.d("Accesstoken 3: ", ApiConstants.accessToken);
                 //MainActivity.getRefreshToken(ApiConstants.refreshToken);
+
+                //Api call to take the word, meaning and sentence from dialog box and adding it to the vocab set.
+                //ResourceId(of vocab set) is set in vocabdashboard adapter to associate the words with resource.
                 AddWordBody addWordBody = new AddWordBody(wordOrder.getText().toString(), wordName.getText().toString(), wordMeaning.getText().toString(), wordSentence.getText().toString(), "1");
-                RestClient.getExampleApi().addVocabWords("Bearer " + ApiConstants.accessToken, resourceId, addWordBody).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<AddWordResponse>() {
+                RestClient.getExampleApi().addVocabWords("Bearer " + ApiConstants.accessToken, resourceId, addWordBody)
+                        .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<AddWordResponse>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
@@ -235,6 +255,8 @@ public class EditVocabSet extends AppCompatActivity {
                     @Override
                     public void onNext(AddWordResponse value) {
                         Toast.makeText(getApplicationContext(), "Successfully saved", Toast.LENGTH_SHORT).show();
+
+                        //to reload the recycler view with new word.
                         Intent i = new Intent(EditVocabSet.this, EditVocabSet.class);
                         i.putExtra("check", 1);
                         startActivity(i);

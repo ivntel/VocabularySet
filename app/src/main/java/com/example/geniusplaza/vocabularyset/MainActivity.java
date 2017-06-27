@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // Api call to check the credentials of user and retrieve access token and refresh token
     public void loginButtonClicked(View v) {
         uname = (EditText) findViewById(R.id.username);
         pword = (EditText) findViewById(R.id.password);
@@ -95,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Refresh token call to keep user logged in
     public static void getRefreshToken(final String refreshToken) {
         ApiConstants apiConstants = new ApiConstants();
         RestClient.getExampleApi().postRefreshToken("Basic " + apiConstants.getBase64(), refreshToken, "refresh_token").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<AuthToken>() {

@@ -61,8 +61,11 @@ public class VocabDashboard extends AppCompatActivity {
         mProgressBar.setVisibility(View.VISIBLE);
 
         //MainActivity.getRefreshToken(ApiConstants.refreshToken);
+
+        //Populating the dashboard with api call to load vocab resources made by user.
         ResourceRequest resourceRequest = new ResourceRequest("1", "vocabularyset", "", "True");
-        RestClient.getExampleApi().postGetResources("Bearer " + ApiConstants.accessToken, resourceRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<Resources>() {
+        RestClient.getExampleApi().postGetResources("Bearer " + ApiConstants.accessToken, resourceRequest)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<Resources>() {
             @Override
             public void onSubscribe(Disposable d) {
 
@@ -95,8 +98,11 @@ public class VocabDashboard extends AppCompatActivity {
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         mProgressBar.setVisibility(View.VISIBLE);
         //MainActivity.getRefreshToken(ApiConstants.refreshToken);
+
+        //This method can be use to populate the vocab dashboard with all the vocabulary resources
         ResourceRequest resourceRequest = new ResourceRequest("1", "vocabularyset", "", "False");
-        RestClient.getExampleApi().postGetResources("Bearer " + ApiConstants.accessToken, resourceRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<Resources>() {
+        RestClient.getExampleApi().postGetResources("Bearer " + ApiConstants.accessToken, resourceRequest)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<Resources>() {
             @Override
             public void onSubscribe(Disposable d) {
 
@@ -128,8 +134,11 @@ public class VocabDashboard extends AppCompatActivity {
     public void searchButtonClicked(View v) {
         mProgressBar.setVisibility(View.VISIBLE);
         //MainActivity.getRefreshToken(ApiConstants.refreshToken);
+
+        //Vocab dashboard populated with resources which are searched.
         ResourceRequest resourceRequest = new ResourceRequest("1", "vocabularyset", sEditText.getText().toString(), "False");
-        RestClient.getExampleApi().postGetResources("Bearer " + ApiConstants.accessToken, resourceRequest).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<Resources>() {
+        RestClient.getExampleApi().postGetResources("Bearer " + ApiConstants.accessToken, resourceRequest)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new io.reactivex.Observer<Resources>() {
             @Override
             public void onSubscribe(Disposable d) {
 
@@ -159,13 +168,14 @@ public class VocabDashboard extends AppCompatActivity {
 
     }
 
+    //Edit vocab set activity handles both creation of vocab set and editing it so the extra field "check" handles that
     public void addVocabSetClicked(View v) {
         Intent i = new Intent(this, EditVocabSet.class);
         i.putExtra("check", 0);
         startActivity(i);
     }
 
-
+    //Google cloud vision Activity
     public void cameraButtonClicked(View v) {
         Intent i = new Intent(this, ChooseActivity.class);
         startActivity(i);
