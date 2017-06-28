@@ -42,7 +42,8 @@
         <activity android:name=".DictionaryActivity" />
         <activity android:name=".TranslateActivity" />
         <activity android:name=".WordsDatabase" />
-        <activity android:name=".WordGame"></activity>
+        <activity android:name=".WordGame" />
+        <activity android:name=".PhraseActivity"></activity>
     </application>
 
 </manifest>

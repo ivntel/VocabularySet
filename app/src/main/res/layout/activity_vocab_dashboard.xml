@@ -57,19 +57,6 @@
     </android.support.design.widget.AppBarLayout>
 
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|center_horizontal"
-        android:layout_margin="@dimen/fab_margin"
-        android:clickable="true"
-        android:onClick="cameraButtonClicked"
-        app:backgroundTint="@color/colorPrimary"
-        app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="bottom|start"
-        app:srcCompat="@android:drawable/ic_menu_camera" />
-
     <include
         android:id="@+id/include"
         layout="@layout/content_vocab_dashboard" />

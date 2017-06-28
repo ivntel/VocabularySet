@@ -99,15 +99,32 @@ public class VocabDashboard extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.menu_dashboard, menu);
         return true;
     }
     @Override
-    public boolean onOptionsItemSelected(MenuItem home){
-        Intent i = new Intent(VocabDashboard.this, VocabDashboard.class);
-        startActivity(i);
-        return super.onOptionsItemSelected(home);
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+        switch (id){
+            case R.id.home:
+                Intent i = new Intent(VocabDashboard.this, VocabDashboard.class);
+                startActivity(i);
+                break;
+            case R.id.picture:
+                //google cloud vision activity
+                i = new Intent(this, ChooseActivity.class);
+                startActivity(i);
+                break;
+            case R.id.phrase:
+                i = new Intent(this, PhraseActivity.class);
+                startActivity(i);
+                break;
+        }
+//        Intent i = new Intent(VocabDashboard.this, VocabDashboard.class);
+//        startActivity(i);
+        return super.onOptionsItemSelected(item);
     }
+
     public void allVocabSetClicked(View v) {
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         mProgressBar.setVisibility(View.VISIBLE);
@@ -188,9 +205,4 @@ public class VocabDashboard extends AppCompatActivity {
         startActivity(i);
     }
 
-    //Google cloud vision Activity
-    public void cameraButtonClicked(View v) {
-        Intent i = new Intent(this, ChooseActivity.class);
-        startActivity(i);
-    }
 }
